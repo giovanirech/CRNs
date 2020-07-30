@@ -191,6 +191,15 @@ def get_volumes(directories):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
+def get_Nkpoints(directories):
+	N = []
+	for d in directories:
+		n = np.int(subprocess.check_output('grep \' Number of k points for this configuration =\' ' +  d + '/gulp_free_*.got | awk \'{print $9}\'', shell=True))
+		N.append(n)
+	return N
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 def get_potential_energy(directories):
 	PE = []	
 	for d in directories:
@@ -281,7 +290,7 @@ def fit_frequency_vs_volume(V, MF):
 	for i in range(num_freq):
 		F = MF[i,:]
 		a, b, c = np.polyfit(V, F, 2)
-		f_fit = a * np.power(np.array(V),2) + b * np.array(V) + c
+		f_fit = a * np.power(np.array(V),2.0) + b * np.array(V) + c
 		F_FIT.append(f_fit)
 	
 	MF_FIT = np.array(F_FIT)
@@ -354,7 +363,31 @@ def get_list_directories():
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-
+def calc_free_energy(MF_FIT, N_kpoints, PE,temperature_list):
+    h_eV_s = 4.135667696e-15 #plancks constant in eV*s
+    c_cm_per_s = 2.99792458e+10 # speed of light in cm/s
+    Kb_eV_per_K = 8.617333262145e-5 #Boltzmann constant in eV per kelvin
+           
+    assert (np.shape(MF_FIT)[1]==len(N_kpoints)), 'Mismatch in lenghts! verify.'
+        
+    F_list_volume = [] #List of helmholtz free energy with N temp energies for each volume
+    for v in range(len(N_kpoints)): #iterates over "volumes"
+        N = N_kpoints[v]
+        freqs = MF_FIT[:,v]
+        pe = PE[v]
+        #we will assume that each kpoint has the same weight to the vib energy.
+        #This is NOT true if symmetry is exploited.
+        weight = 1/N #weight of each kpoint
+        F_list_temp=[]
+        for temp in temperature_list:
+            F_vib = np.sum(weight*0.5*h_eV_s*c_cm_per_s*freqs + weight*Kb_eV_per_K*temp*np.exp(-(h_eV_s*c_cm_per_s*freqs)/(Kb_eV_per_K*temp)))
+            F_list_temp.append(F_vib+pe)
+        F_list_volume.append(F_list_temp)
+    #returns a matrix with free-energies. Temperatures in lines and volumes in columns
+    return np.transpose(np.array(F_list_volume))
+    
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 if ( len(sys.argv) != 2 ):
 	print (sys.argv[0] + ' <file.xyz>', flush=True)
 	sys.exit(0)
@@ -430,6 +463,7 @@ D = get_list_directories()
 
 V = get_volumes(D)
 PE = get_potential_energy(D)
+N_kpoints = get_Nkpoints(D)
 
 np.savetxt('potential_energy_vs_volume.dat',  np.transpose([V,PE]), fmt='%.6f')
 fit_potential_energy_vs_volume(V, PE)
@@ -440,7 +474,8 @@ ZPE_FIT = fit_zero_point_energy_vs_volume(V,ZPE)
 MF = get_frequencies(D)
 MF_FIT = fit_frequency_vs_volume(V, MF)
 
-
+temperature_list = np.arange(10,310,10)
+MFREE_FIT = calc_free_energy(MF_FIT, N_kpoints, PE, temperature_list)
 '''	
 	#pe, zpe, fe_partial = get_free_energy(atoms, str(factor_mul), temperature='temperature 10 10 29')
 		

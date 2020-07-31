@@ -255,8 +255,8 @@ def calc_free_energy(MF_FIT, N_kpoints, PE, T):
 		w = 1/N
 		FT = []
 		for t in T:
-            		fvib = np.sum(w*0.5*h_eV_s*c_cm_per_s*freqs + w*Kb_eV_per_K*t*np.exp(-(h_eV_s*c_cm_per_s*freqs)/(Kb_eV_per_K*t)))
-            		FT.append(fvib + pe)
+			fvib = np.sum(w*0.5*h_eV_s*c_cm_per_s*freqs + w*Kb_eV_per_K*t*np.log(1-np.exp(-(h_eV_s*c_cm_per_s*freqs)/(Kb_eV_per_K*t))))
+			FT.append(fvib + pe)
 		F.append(FT)
 
 	return np.transpose(np.array(F))
@@ -379,8 +379,7 @@ def get_list_directories():
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 
-
-displacement = 0
+displacement = 2
 number_points = 9
 start = - (number_points//2) + displacement
 end =   number_points//2 + displacement
@@ -405,8 +404,6 @@ for p in perc_list:
 	a = vol ** (1./3)
 	atoms.set_cell([a, a, a, 90, 90, 90], scale_atoms=True)
 	
-	v = atoms.get_volume()
-
 	atomic_position_optimization(atoms, factor_dir)
 		
 	cif_opti_file = 'opti_' + factor_dir + '.cif'

@@ -16,7 +16,7 @@
 ********************************************************************************
 
 
-  Job Started  at 09:36.09 31st July       2020                               
+  Job Started  at 13:01.40 31st July       2020                               
 
   Number of CPUs =     1
 
@@ -154,7 +154,7 @@
 
   Start of bulk optimisation :
 
-  Cycle:      0 Energy:       -58.950354  Gnorm:      0.000000  CPU:    0.011
+  Cycle:      0 Energy:       -58.950354  Gnorm:      0.000000  CPU:    0.027
 
 
   **** Optimisation achieved ****
@@ -212,7 +212,7 @@
 --------------------------------------------------------------------------------
 
 
-  Time to end of optimisation =       0.0124 seconds
+  Time to end of optimisation =       0.0277 seconds
 
 
   Peak dynamic memory used =       1.80 MB 
@@ -223,14 +223,14 @@
 --------------------------------------------------------------------------------
   Task / Subroutine                                          Time (Seconds)
 --------------------------------------------------------------------------------
-  Calculation of Brenner energy and derivatives                   0.0013
+  Calculation of Brenner energy and derivatives                   0.0027
 --------------------------------------------------------------------------------
-  Total CPU time                                                  0.0126
+  Total CPU time                                                  0.0278
 --------------------------------------------------------------------------------
 
 
   CIF file written as opti_1.0075.cif
 
 
-  Job Finished at 09:36.09 31st July       2020                               
+  Job Finished at 13:01.40 31st July       2020                               
 

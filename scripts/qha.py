@@ -316,17 +316,18 @@ def fit_frequency_vs_volume(V, MF):
 def fit_volume_vs_temperature(T, V):
 
 	params = Parameters()
-	params.add('a0', value=45, min=-100000, max=100000)
+	params.add('a0', value= round(V[0]), min=0, max=100000)
 	params.add('a1', value=0, min=-1000, max=1000)
 	params.add('a2', value=0, min=-1000, max=1000)
 	params.add('a3', value=0, min=-1000, max=1000)
 
 	min = Minimizer(func2min, params, fcn_args=(T, V))
-	out = min.minimize(method='differential_evolution')
+	kws={'popsize':10}
+	out = min.minimize(method='differential_evolution', **kws)
 	fit = func2min(out.params, T, V)
 
 	print(fit_report(out), flush=True)
-
+	
 	min = Minimizer(func2min, params=out.params, fcn_args=(T, V))
 	out = min.minimize(method='leastsq')
 	fit = func2min(out.params, T, V)
@@ -384,28 +385,35 @@ if ( len(sys.argv) != 2 ):
 	print (sys.argv[0] + ' <file.xyz>', flush=True)
 	sys.exit(0)
 
-'''
 change_format_xyz(sys.argv[1], 'amorph.xyz')
+
 atoms = read('amorph.xyz')
 print('Hibridizacao apos Amorph')
 hybridization_calculation(atoms)
+
 molecular_dynamics(atoms)
 atoms = read('dm.cif')
 print('Hibridizacao apos dinamica')
 hybridization_calculation(atoms)
+
 rfo_optimization(atoms, cif_opti_file = 'rfo.cif')
 atoms = read('rfo.cif')
 print('Hibridizacao apos RFO')
 hybridization_calculation(atoms)
+
 full_optimization(atoms, cif_opti_file = 'opti.cif')
 atoms = read('opti.cif')
 print('Hibridizacao apos otimizacao completa')
 hybridization_calculation(atoms)
+
 displacement = 0
 number_points = 9
+
 start = - (number_points//2) + displacement
 end =   number_points//2 + displacement
+
 percentage = 3
+
 perc_list = list(range(start,end+1))
 for p in perc_list:
 
@@ -416,11 +424,10 @@ for p in perc_list:
 	cur_dir = os.getcwd()
 	os.mkdir(factor_dir)
 	os.chdir(factor_dir)
+
 	vol = factor_mul * atoms.get_volume() * 1.014
 	a = vol ** (1./3)
 	atoms.set_cell([a, a, a, 90, 90, 90], scale_atoms=True)
-
-	v = atoms.get_volume()
 	atomic_position_optimization(atoms, factor_dir)
 
 	cif_opti_file = 'opti_' + factor_dir + '.cif'
@@ -428,9 +435,9 @@ for p in perc_list:
 	atoms = read(cif_opti_file)
 	print('Hibridizacao apos otimizacao a volume constante: %s' % factor_dir)
 	hybridization_calculation(atoms)
+
 	phonon_calculation(atoms, factor_dir)
 	os.chdir(cur_dir)
-'''
 
 D = get_list_directories()
 
@@ -445,10 +452,8 @@ MF = get_frequencies(D)
 MF_FIT = fit_frequency_vs_volume(V, MF)
 
 T = np.linspace(10,300,30)
-MFREE_FIT = calc_free_energy(MF_FIT, N_kpoints, PE, T)
 
-print(T)
-print(MFREE_FIT)
+MFREE_FIT = calc_free_energy(MF_FIT, N_kpoints, PE, T)
 
 V_FIT = []
 num_temp = np.shape(MFREE_FIT)[0]
@@ -460,7 +465,6 @@ for t in range(num_temp):
 np.savetxt('volume_vs_temperature.dat', np.transpose([T,V_FIT]), fmt='%.6f')
 plot_volume_vs_temperature('volume_vs_temperature.dat')
 
-
 a0, a1, a2, a3 = fit_volume_vs_temperature(T,V_FIT)
 
 A = thermal_expansion_coefficient(T, a0, a1, a2, a3)
@@ -468,3 +472,6 @@ A = thermal_expansion_coefficient(T, a0, a1, a2, a3)
 np.savetxt('thermal_expansion_coefficient.dat', np.transpose([T,A]), fmt='%.6f')
 
 plot_thermal_expansion_vs_temperature('thermal_expansion_coefficient.dat')
+
+
+

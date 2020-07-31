@@ -18,7 +18,7 @@
 ********************************************************************************
 
 
-  Job Started  at 19:26.50 29th July       2020                               
+  Job Started  at 12:59.08 31st July       2020                               
 
   Number of CPUs =     1
 
@@ -221,27 +221,27 @@
 
   Start of bulk optimisation :
 
-  Cycle:      0 Energy:      -422.136293  Gnorm:      0.271244  CPU:    0.391
+  Cycle:      0 Energy:      -422.136293  Gnorm:      0.271244  CPU:    0.349
   ** Hessian has required structure
-  Cycle:      1 Energy:      -422.511486  Gnorm:      0.142356  CPU:    0.618
+  Cycle:      1 Energy:      -422.511486  Gnorm:      0.142356  CPU:    0.721
   ** Hessian has required structure
-  Cycle:      2 Energy:      -422.557289  Gnorm:      0.029112  CPU:    0.755
+  Cycle:      2 Energy:      -422.557289  Gnorm:      0.029112  CPU:    0.983
   ** Hessian has required structure
-  Cycle:      3 Energy:      -422.559254  Gnorm:      0.015752  CPU:    0.873
+  Cycle:      3 Energy:      -422.559254  Gnorm:      0.015752  CPU:    1.315
   ** Hessian has required structure
-  Cycle:      4 Energy:      -422.560128  Gnorm:      0.006835  CPU:    0.993
+  Cycle:      4 Energy:      -422.560128  Gnorm:      0.006835  CPU:    1.543
   ** Hessian has required structure
-  Cycle:      5 Energy:      -422.560287  Gnorm:      0.005515  CPU:    1.116
+  Cycle:      5 Energy:      -422.560287  Gnorm:      0.005515  CPU:    1.651
   ** Hessian has required structure
-  Cycle:      6 Energy:      -422.560352  Gnorm:      0.004380  CPU:    1.247
+  Cycle:      6 Energy:      -422.560352  Gnorm:      0.004380  CPU:    1.749
   ** Hessian has required structure
-  Cycle:      7 Energy:      -422.560415  Gnorm:      0.003811  CPU:    1.384
+  Cycle:      7 Energy:      -422.560415  Gnorm:      0.003811  CPU:    1.835
   ** Hessian has required structure
-  Cycle:      8 Energy:      -422.560485  Gnorm:      0.002348  CPU:    1.504
+  Cycle:      8 Energy:      -422.560485  Gnorm:      0.002348  CPU:    1.953
   ** Hessian has required structure
-  Cycle:      9 Energy:      -422.560522  Gnorm:      0.000946  CPU:    1.620
+  Cycle:      9 Energy:      -422.560522  Gnorm:      0.000946  CPU:    2.060
   ** Hessian has required structure
-  Cycle:     10 Energy:      -422.560528  Gnorm:      0.000168  CPU:    1.743
+  Cycle:     10 Energy:      -422.560528  Gnorm:      0.000168  CPU:    2.190
   ** Hessian has required structure
 
 
@@ -640,7 +640,7 @@
 
 
 
-  Time to end of optimisation =       3.0721 seconds
+  Time to end of optimisation =       4.1840 seconds
 
 
   Peak dynamic memory used =       3.35 MB 
@@ -651,17 +651,17 @@
 --------------------------------------------------------------------------------
   Task / Subroutine                                          Time (Seconds)
 --------------------------------------------------------------------------------
-  Calculation of real space energy and derivatives                0.0004
-  Calculation of Brenner energy and derivatives                   1.7013
-  Calculation of phonons                                          0.2845
-  Calculation and manipulation of Hessian matrix                  1.2281
+  Calculation of real space energy and derivatives                0.0002
+  Calculation of Brenner energy and derivatives                   2.2407
+  Calculation of phonons                                          0.3050
+  Calculation and manipulation of Hessian matrix                  1.8201
 --------------------------------------------------------------------------------
-  Total CPU time                                                  3.0724
+  Total CPU time                                                  4.1840
 --------------------------------------------------------------------------------
 
 
   CIF file written as rfo.cif
 
 
-  Job Finished at 19:26.53 29th July       2020                               
+  Job Finished at 12:59.12 31st July       2020                               
 

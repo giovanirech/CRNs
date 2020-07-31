@@ -15,7 +15,7 @@
 ********************************************************************************
 
 
-  Job Started  at 09:37.00 31st July       2020                               
+  Job Started  at 13:02.24 31st July       2020                               
 
   Number of CPUs =     1
 
@@ -3718,7 +3718,7 @@
                                =       38.781916 J/(mol.K)
 --------------------------------------------------------------------------------
 
-  Time to end of properties =      16.5467 seconds
+  Time to end of properties =      13.9322 seconds
 
 
   Peak dynamic memory used =       1.93 MB 
@@ -3729,14 +3729,15 @@
 --------------------------------------------------------------------------------
   Task / Subroutine                                          Time (Seconds)
 --------------------------------------------------------------------------------
-  Calculation of real space energy and derivatives                0.0053
-  Calculation of Brenner energy and derivatives                  16.1667
-  Calculation of phonons                                         16.4362
-  Disk read/write operations to scratch files                     0.0651
+  Calculation of real space energy and derivatives                0.0038
+  Calculation of Brenner energy and derivatives                  13.6303
+  Calculation of phonons                                         13.8297
+  Calculation of matrix inversion                                 0.0001
+  Disk read/write operations to scratch files                     0.0433
 --------------------------------------------------------------------------------
-  Total CPU time                                                 16.5467
+  Total CPU time                                                 13.9323
 --------------------------------------------------------------------------------
 
 
-  Job Finished at 09:37.16 31st July       2020                               
+  Job Finished at 13:02.37 31st July       2020                               
 

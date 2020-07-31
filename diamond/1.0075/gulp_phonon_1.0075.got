@@ -15,7 +15,7 @@
 ********************************************************************************
 
 
-  Job Started  at 09:36.09 31st July       2020                               
+  Job Started  at 13:01.40 31st July       2020                               
 
   Number of CPUs =     1
 
@@ -3718,7 +3718,7 @@
                                =       36.343698 J/(mol.K)
 --------------------------------------------------------------------------------
 
-  Time to end of properties =      15.4166 seconds
+  Time to end of properties =      13.4712 seconds
 
 
   Peak dynamic memory used =       1.93 MB 
@@ -3729,15 +3729,15 @@
 --------------------------------------------------------------------------------
   Task / Subroutine                                          Time (Seconds)
 --------------------------------------------------------------------------------
-  Calculation of real space energy and derivatives                0.0048
-  Calculation of Brenner energy and derivatives                  15.0674
-  Calculation of phonons                                         15.3158
-  Calculation of matrix inversion                                 0.0002
-  Disk read/write operations to scratch files                     0.0584
+  Calculation of real space energy and derivatives                0.0036
+  Calculation of Brenner energy and derivatives                  13.1956
+  Calculation of phonons                                         13.3833
+  Calculation of matrix inversion                                 0.0001
+  Disk read/write operations to scratch files                     0.0404
 --------------------------------------------------------------------------------
-  Total CPU time                                                 15.4167
+  Total CPU time                                                 13.4713
 --------------------------------------------------------------------------------
 
 
-  Job Finished at 09:36.25 31st July       2020                               
+  Job Finished at 13:01.54 31st July       2020                               
 

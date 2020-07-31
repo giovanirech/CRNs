@@ -18,7 +18,7 @@
 ********************************************************************************
 
 
-  Job Started  at 19:26.55 29th July       2020                               
+  Job Started  at 12:59.14 31st July       2020                               
 
   Number of CPUs =     1
 
@@ -222,10 +222,10 @@
 
   Start of bulk optimisation :
 
-  Cycle:      0 Energy:      -422.560525  Gnorm:      0.000942  CPU:    0.061
-  Cycle:      1 Energy:      -422.560526  Gnorm:      0.000660  CPU:    0.118
-  Cycle:      2 Energy:      -422.560526  Gnorm:      0.000312  CPU:    0.147
-  Cycle:      3 Energy:      -422.560527  Gnorm:      0.000185  CPU:    0.176
+  Cycle:      0 Energy:      -422.560525  Gnorm:      0.000942  CPU:    0.031
+  Cycle:      1 Energy:      -422.560526  Gnorm:      0.000660  CPU:    0.065
+  Cycle:      2 Energy:      -422.560526  Gnorm:      0.000312  CPU:    0.072
+  Cycle:      3 Energy:      -422.560527  Gnorm:      0.000185  CPU:    0.097
 
 
   **** Optimisation achieved ****
@@ -623,7 +623,7 @@
 
 
 
-  Time to end of optimisation =       1.0494 seconds
+  Time to end of optimisation =       0.9529 seconds
 
 
   Peak dynamic memory used =       2.65 MB 
@@ -635,15 +635,15 @@
   Task / Subroutine                                          Time (Seconds)
 --------------------------------------------------------------------------------
   Calculation of real space energy and derivatives                0.0004
-  Calculation of Brenner energy and derivatives                   0.9666
-  Calculation of phonons                                          0.2951
+  Calculation of Brenner energy and derivatives                   0.8914
+  Calculation of phonons                                          0.2929
 --------------------------------------------------------------------------------
-  Total CPU time                                                  1.0496
+  Total CPU time                                                  0.9530
 --------------------------------------------------------------------------------
 
 
   CIF file written as opti.cif
 
 
-  Job Finished at 19:26.56 29th July       2020                               
+  Job Finished at 12:59.15 31st July       2020                               
 

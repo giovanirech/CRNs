@@ -72,6 +72,5 @@ frac
  C  core  0.1992600   0.3035900   0.6719100
 
 brenner
-temperature 10 10 29
 shrink 8 8 8
 output freq text freq_1.0150.out

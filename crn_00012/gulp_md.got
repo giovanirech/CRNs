@@ -16,7 +16,7 @@
 ********************************************************************************
 
 
-  Job Started  at 19:20.08 29th July       2020                               
+  Job Started  at 12:52.26 31st July       2020                               
 
   Number of CPUs =     1
 
@@ -14226,19 +14226,19 @@
 --------------------------------------------------------------------------------
   Task / Subroutine                                          Time (Seconds)
 --------------------------------------------------------------------------------
-  Calculation of Brenner energy and derivatives                 392.1687
-  Calculation of matrix inversion                                 0.2352
-  Molecular dynamics - update of geometry                         1.6027
-  Molecular dynamics - predictor                                  0.1258
-  Molecular dynamics - corrector                                  2.3785
-  Molecular dynamics - velocity correction                        1.1323
+  Calculation of Brenner energy and derivatives                 392.1006
+  Calculation of matrix inversion                                 0.2216
+  Molecular dynamics - update of geometry                         1.5403
+  Molecular dynamics - predictor                                  0.1295
+  Molecular dynamics - corrector                                  2.3049
+  Molecular dynamics - velocity correction                        1.0907
 --------------------------------------------------------------------------------
-  Total CPU time                                                399.3010
+  Total CPU time                                                398.9237
 --------------------------------------------------------------------------------
 
 
   CIF file written as dm.cif
 
 
-  Job Finished at 19:26.48 29th July       2020                               
+  Job Finished at 12:59.05 31st July       2020                               
 

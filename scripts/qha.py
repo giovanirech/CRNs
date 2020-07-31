@@ -164,18 +164,18 @@ def atomic_position_optimization(atoms, factor_dir):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-
-def free_energy(atoms, factor_dir, temperature):
+def phonon_calculation(atoms, factor_dir):
 	
 	c = Conditions(atoms)
 	
 	freq_file = 'freq_' + factor_dir + '.out'
-	calc = GULP(keywords='phon noden prop', options=[temperature, 'shrink 8 8 8', 'output freq text ' + freq_file ], library='brenner', conditions=c)
+	calc = GULP(keywords='phon noden prop', options=['shrink 8 8 8', 'output freq text ' + freq_file ], library='brenner', conditions=c)
 	atoms.set_calculator(calc)
+
 	atoms.get_potential_energy()
 	
-	gulp_file_in = 'gulp_free_' + factor_dir + '.gin'
-	gulp_file_out = 'gulp_free_' + factor_dir + '.got'
+	gulp_file_in = 'gulp_phonon_' + factor_dir + '.gin'
+	gulp_file_out = 'gulp_phonon_' + factor_dir + '.got'
 		
 	shutil.copy2('gulp.gin', gulp_file_in)
 	shutil.copy2('gulp.got', gulp_file_out)
@@ -198,14 +198,15 @@ def get_potential_energy(directories):
 		PE.append(pe)
 	return PE
 
+
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def get_zero_point_energy(directories):
-	ZPE = []	
+def get_Nkpoints(directories):
+	N = []
 	for d in directories:
-		zpe = np.float(subprocess.check_output('grep  -m 1 \'Zero point energy\' ' +  d + '/gulp_free_*.got | awk \'{print $5}\'', shell=True))
-		ZPE.append(zpe)
-	return ZPE
+		n = np.int(subprocess.check_output('grep \' Number of k points for this configuration =\' ' +  d + '/gulp_phonon_*.got | awk \'{print $9}\'', shell=True))
+		N.append(n)
+	return N
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -239,20 +240,43 @@ def  fit_free_energy_vs_volume(V, P,t ):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
+def calc_free_energy(MF_FIT, N_kpoints, PE, T):
+	h_eV_s = 4.135667696e-15 
+	c_cm_per_s = 2.99792458e+10 
+	Kb_eV_per_K = 8.617333262145e-5 
+
+	assert (np.shape(MF_FIT)[1]==len(N_kpoints))
+
+	F = []
+	for v in range(len(N_kpoints)):
+		N = N_kpoints[v]
+		freqs = MF_FIT[:,v]
+		pe = PE[v]
+		w = 1/N
+		FT = []
+		for t in T:
+            		fvib = np.sum(w*0.5*h_eV_s*c_cm_per_s*freqs + w*Kb_eV_per_K*t*np.exp(-(h_eV_s*c_cm_per_s*freqs)/(Kb_eV_per_K*t)))
+            		FT.append(fvib + pe)
+		F.append(FT)
+
+	return np.transpose(np.array(F))
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 def func(x, a0, a1, a2, a3):
 	return a0 + (a1/x + a2*x) * np.exp(-a3/x)
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def derived_function(x, a0, a1, a2, a3):
-    return ((a2 - a1/x**2)*np.exp(-a3/x) + (a3*(a1/x + a2*x))/(np.exp(a3/x)*x**2)) 
+	return ((a2 - a1/x**2)*np.exp(-a3/x) + (a3*(a1/x + a2*x))/(np.exp(a3/x)*x**2)) 
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def func2min(params, T, V):
-    a0, a1, a2, a3 = params['a0'], params['a1'], params['a2'], params['a3']
-    model = func(T, a0, a1, a2, a3)
-    return model - V
+	a0, a1, a2, a3 = params['a0'], params['a1'], params['a2'], params['a3']
+	model = func(T, a0, a1, a2, a3)
+	return model - V
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -420,7 +444,7 @@ for p in perc_list:
 	print('Hibridizacao apos otimizacao a volume constante: %s' % factor_dir)
 	hybridization_calculation(atoms)
 
-	free_energy(atoms, factor_dir, temperature='temperature 10 10 29')
+	phonon_calculation(atoms, factor_dir)
 
 	os.chdir(cur_dir)
 
@@ -430,54 +454,32 @@ D = get_list_directories()
 
 V = get_volumes(D)
 PE = get_potential_energy(D)
+N_kpoints = get_Nkpoints(D)
 
 np.savetxt('potential_energy_vs_volume.dat',  np.transpose([V,PE]), fmt='%.6f')
 fit_potential_energy_vs_volume(V, PE)
 
-ZPE = get_zero_point_energy(D)
-ZPE_FIT = fit_zero_point_energy_vs_volume(V,ZPE)
-
 MF = get_frequencies(D)
 MF_FIT = fit_frequency_vs_volume(V, MF)
 
+T = np.linspace(10,300,30)
+MFREE_FIT = calc_free_energy(MF_FIT, N_kpoints, PE, T)
 
-'''	
-	#pe, zpe, fe_partial = get_free_energy(atoms, str(factor_mul), temperature='temperature 10 10 29')
-		
-	V.append(v)
-	ZPE.append(zpe)	
-	PE.append(pe)
-	FE.append(fe_partial)
+print(T)
+print(MFREE_FIT)
 
-	'''
-'''
+V_FIT = [] 
+num_temp = np.shape(MFREE_FIT)[0]
+for t in range(num_temp):
+	F = MFREE_FIT[t,:]
+	v0, e0, B = fit_free_energy_vs_volume(V,F, T[t])
+	V_FIT.append(v0)
 
-
-fit_potential_energy_vs_volume(V,PE)
-
-FE = np.array(FE)
-
-L,C = np.shape(FE)
-
-T = []
-VA = []
-
-t = 10
-for k in range(C):
-	F = FE[:,k] - ZPE + ZPE_FIT	
-	v0, e0, B = fit_free_energy_vs_volume(V,F, t)
-	T.append(t)
-	t = t + 10
-	VA.append(v0)
-
-np.savetxt('volume_vs_temperature.dat', np.transpose([T,VA]), fmt='%.6f')
-
+np.savetxt('volume_vs_temperature.dat', np.transpose([T,V_FIT]), fmt='%.6f')
 plot_volume_vs_temperature('volume_vs_temperature.dat')
 
-T = np.array(T)
-V = np.array(VA)
 
-a0, a1, a2, a3 = fit_volume_vs_temperature(T,V)
+a0, a1, a2, a3 = fit_volume_vs_temperature(T,V_FIT)
 
 A = thermal_expansion_coefficient(T, a0, a1, a2, a3)
 
@@ -485,5 +487,3 @@ np.savetxt('thermal_expansion_coefficient.dat', np.transpose([T,A]), fmt='%.6f')
 
 plot_thermal_expansion_vs_temperature('thermal_expansion_coefficient.dat')
 
-copy_intermediate_files()
-'''

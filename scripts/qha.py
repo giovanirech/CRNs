@@ -385,57 +385,41 @@ if ( len(sys.argv) != 2 ):
 
 '''
 change_format_xyz(sys.argv[1], 'amorph.xyz')
-
 atoms = read('amorph.xyz')
 print('Hibridizacao apos Amorph')
-
 hybridization_calculation(atoms)
-
 molecular_dynamics(atoms)
-
 atoms = read('dm.cif')
 print('Hibridizacao apos dinamica')
 hybridization_calculation(atoms)
-
 rfo_optimization(atoms, cif_opti_file = 'rfo.cif')	
 atoms = read('rfo.cif')
 print('Hibridizacao apos RFO')
 hybridization_calculation(atoms)
-
 full_optimization(atoms, cif_opti_file = 'opti.cif')
-
 atoms = read('opti.cif')
 print('Hibridizacao apos otimizacao completa')
 hybridization_calculation(atoms)
-
 displacement = 0
 number_points = 9
 start = - (number_points//2) + displacement
 end =   number_points//2 + displacement
-
 percentage = 3
-
 perc_list = list(range(start,end+1))
-
 for p in perc_list:
 		
 	atoms = read('opti.cif')
-
 	factor_mul = 1 + (p * (2.0*percentage)/(number_points-1))/100.0
 	
 	factor_dir = "{:.4f}".format(factor_mul)
-
 	cur_dir = os.getcwd()
 	os.mkdir(factor_dir)
 	os.chdir(factor_dir)
-
 	vol = factor_mul * atoms.get_volume() * 1.014
 	a = vol ** (1./3)
 	atoms.set_cell([a, a, a, 90, 90, 90], scale_atoms=True)
 	
 	v = atoms.get_volume()
-
-
 	atomic_position_optimization(atoms, factor_dir)
 		
 	cif_opti_file = 'opti_' + factor_dir + '.cif'
@@ -443,11 +427,8 @@ for p in perc_list:
 	atoms = read(cif_opti_file)
 	print('Hibridizacao apos otimizacao a volume constante: %s' % factor_dir)
 	hybridization_calculation(atoms)
-
 	phonon_calculation(atoms, factor_dir)
-
 	os.chdir(cur_dir)
-
 '''
 
 D = get_list_directories()
@@ -486,4 +467,3 @@ A = thermal_expansion_coefficient(T, a0, a1, a2, a3)
 np.savetxt('thermal_expansion_coefficient.dat', np.transpose([T,A]), fmt='%.6f')
 
 plot_thermal_expansion_vs_temperature('thermal_expansion_coefficient.dat')
-

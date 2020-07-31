@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import subprocess
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,14 +18,14 @@ from ase.eos import EquationOfState
 from ase.neighborlist import NeighborList
 from ase.data import covalent_radii
 
-from scipy.optimize import minimize 
+from scipy.optimize import minimize
 from scipy.optimize import curve_fit
 from lmfit import fit_report, Minimizer, Parameters
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 
-DISTANCE_MIN = 1.7 
+DISTANCE_MIN = 1.7
 DISTANCE_MAX = 2.0
 
 DISTANCE = 1.85
@@ -33,12 +34,12 @@ DISTANCE = 1.85
 #------------------------------------------------------------------------------
 
 def change_format_xyz(input_file, output_file):
-	
+
 	fin = open(input_file, 'r')
 	fout = open(output_file, 'w')
-	
+
 	lines = fin.readlines()
-	
+
 	for i,l in enumerate(lines):
 
 		if i == 1:
@@ -47,9 +48,9 @@ def change_format_xyz(input_file, output_file):
 			fout.write(line_out)
 		else:
 			fout.write(l)
-		
+
 	fin.close()
-	fout.close() 
+	fout.close()
 
 
 #------------------------------------------------------------------------------
@@ -58,9 +59,9 @@ def hybridization_function(distance):
 
 	if ( distance <= DISTANCE_MIN):
 		f = 1.0
-	elif ( distance < DISTANCE_MAX): 
+	elif ( distance < DISTANCE_MAX):
 		c = (math.pi*(distance - DISTANCE_MIN)) / (DISTANCE_MAX - DISTANCE_MIN)
-		f = ( 1.0 + math.cos(c))/2.0  
+		f = ( 1.0 + math.cos(c))/2.0
 	else:
 		f = 0.0
 	return f
@@ -68,17 +69,17 @@ def hybridization_function(distance):
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def hybridization_calculation(atoms):
-	
+
 	cutoffs =  covalent_radii[atoms.numbers]
-	nl = NeighborList(cutoffs=cutoffs, self_interaction=False, bothways=True) 
+	nl = NeighborList(cutoffs=cutoffs, self_interaction=False, bothways=True)
 	nl.update(atoms)
 
 	sp_number = [0,0,0,0,0,0,0,0,0,0]
 
-	for i in range(len(atoms)): 
+	for i in range(len(atoms)):
 
 		indexes, offsets = nl.get_neighbors(i)
-		
+
 		hib = 0
 
 		for j in indexes:
@@ -91,9 +92,9 @@ def hybridization_calculation(atoms):
 			#hib = hib + hybridization_function(d)
 
 		#ihib = int(round(hib))
-		
+
 		#sp_number[ihib] = sp_number[ihib] + 1
-	
+
 		sp_number[hib] = sp_number[hib] + 1
 
 
@@ -109,12 +110,12 @@ def molecular_dynamics(atoms):
 
 	c = Conditions(atoms)
 	calc = GULP(keywords='conp md isotropic', options=['integrator leapfrog verlet', 'ensemble npt 0.0005 0.0005', 'temperature 50','equilibration 5.0 ps', 'timestep 0.0001 ps', 'sample 0.0050', 'output cif dm.cif'], library='brenner', conditions=c)
-	
+
 	atoms.set_calculator(calc)
 	print(atoms.get_potential_energy(), flush=True)
 
-	shutil.copy2('gulp.gin', 'gulp_md.gin') 
-	shutil.copy2('gulp.got', 'gulp_md.got') 
+	shutil.copy2('gulp.gin', 'gulp_md.gin')
+	shutil.copy2('gulp.got', 'gulp_md.got')
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -147,43 +148,43 @@ def full_optimization(atoms, cif_opti_file):
 def atomic_position_optimization(atoms, factor_dir):
 
 	c = Conditions(atoms)
-	
-	cif_opti_file = 'opti_' + factor_dir + '.cif' 
+
+	cif_opti_file = 'opti_' + factor_dir + '.cif'
 	calc = GULP(keywords='conv opti lbfgs isotropic', options=['maxcyc 2000', 'output cif ' + cif_opti_file], library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 
 	pe = atoms.get_potential_energy()
-	
+
 	gulp_file_in = 'gulp_opti_' + factor_dir + '.gin'
 	gulp_file_out = 'gulp_opti_' + factor_dir + '.got'
-	
+
 	shutil.copy2('gulp.gin', gulp_file_in)
 	shutil.copy2('gulp.got', gulp_file_out)
-	
+
 	#return(pe)
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def phonon_calculation(atoms, factor_dir):
-	
+
 	c = Conditions(atoms)
-	
+
 	freq_file = 'freq_' + factor_dir + '.out'
 	calc = GULP(keywords='phon noden prop', options=['shrink 8 8 8', 'output freq text ' + freq_file ], library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 
 	atoms.get_potential_energy()
-	
+
 	gulp_file_in = 'gulp_phonon_' + factor_dir + '.gin'
 	gulp_file_out = 'gulp_phonon_' + factor_dir + '.got'
-		
+
 	shutil.copy2('gulp.gin', gulp_file_in)
 	shutil.copy2('gulp.got', gulp_file_out)
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def get_volumes(directories):
-	V = []	
+	V = []
 	for d in directories:
 		vol = np.float(subprocess.check_output('grep \'Initial cell volume =\' ' +  d + '/gulp_opti_*.got | awk \'{print $5}\'', shell=True))
 		V.append(vol)
@@ -192,7 +193,7 @@ def get_volumes(directories):
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def get_potential_energy(directories):
-	PE = []	
+	PE = []
 	for d in directories:
 		pe = np.float(subprocess.check_output('grep \'Final energy = \' ' +  d + '/gulp_opti_*.got | awk \'{print $4}\'', shell=True))
 		PE.append(pe)
@@ -213,11 +214,11 @@ def get_Nkpoints(directories):
 def get_frequencies(directories):
 	F = []
 	for d in directories:
-		f = glob.glob(d + '/*.out')[0]		
-		freq = np.loadtxt(f)	
-		F.append(freq)	
+		f = glob.glob(d + '/*.out')[0]
+		freq = np.loadtxt(f)
+		F.append(freq)
 	MF = np.transpose(np.array(F))
-	return MF	
+	return MF
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def  fit_potential_energy_vs_volume(V, P):
@@ -230,20 +231,20 @@ def  fit_potential_energy_vs_volume(V, P):
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def  fit_free_energy_vs_volume(V, P,t ):
-	
+
 	eos = EquationOfState(V, P)
 	v0, e0, B = eos.fit()
 	file_plot = 'free_energy_' + str(t) + '.pdf'
 	eos.plot(file_plot)
-	plt.close('all')	
+	plt.close('all')
 	return(v0, e0, B)
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def calc_free_energy(MF_FIT, N_kpoints, PE, T):
-	h_eV_s = 4.135667696e-15 
-	c_cm_per_s = 2.99792458e+10 
-	Kb_eV_per_K = 8.617333262145e-5 
+	h_eV_s = 4.135667696e-15
+	c_cm_per_s = 2.99792458e+10
+	Kb_eV_per_K = 8.617333262145e-5
 
 	assert (np.shape(MF_FIT)[1]==len(N_kpoints))
 
@@ -255,7 +256,7 @@ def calc_free_energy(MF_FIT, N_kpoints, PE, T):
 		w = 1/N
 		FT = []
 		for t in T:
-            		fvib = np.sum(w*0.5*h_eV_s*c_cm_per_s*freqs + w*Kb_eV_per_K*t*np.exp(-(h_eV_s*c_cm_per_s*freqs)/(Kb_eV_per_K*t)))
+            		fvib = np.sum(w*0.5*h_eV_s*c_cm_per_s*freqs + w*Kb_eV_per_K*t*np.log(1-np.exp(-(h_eV_s*c_cm_per_s*freqs)/(Kb_eV_per_K*t))))
             		FT.append(fvib + pe)
 		F.append(FT)
 
@@ -269,7 +270,7 @@ def func(x, a0, a1, a2, a3):
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def derived_function(x, a0, a1, a2, a3):
-	return ((a2 - a1/x**2)*np.exp(-a3/x) + (a3*(a1/x + a2*x))/(np.exp(a3/x)*x**2)) 
+	return ((a2 - a1/x**2)*np.exp(-a3/x) + (a3*(a1/x + a2*x))/(np.exp(a3/x)*x**2))
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -292,7 +293,7 @@ def fit_zero_point_energy_vs_volume(V,ZPE):
 	plt.savefig('volume_vs_zero_point_eneryg.pdf')
 	plt.close('all')
 
-	return ZPE_FIT 
+	return ZPE_FIT
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -307,9 +308,9 @@ def fit_frequency_vs_volume(V, MF):
 		a, b, c = np.polyfit(V, F, 2)
 		f_fit = a * np.power(np.array(V),2) + b * np.array(V) + c
 		F_FIT.append(f_fit)
-	
+
 	MF_FIT = np.array(F_FIT)
-	return MF_FIT	
+	return MF_FIT
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def fit_volume_vs_temperature(T, V):
@@ -343,7 +344,7 @@ def fit_volume_vs_temperature(T, V):
 def thermal_expansion_coefficient(T, a0, a1, a2, a3):
 
 	return ( 1e6 * derived_function(T, a0, a1, a2, a3)/func(T, a0, a1, a2, a3) )
-	
+
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -355,7 +356,7 @@ def plot_volume_vs_temperature(file_name):
 	plt.ylabel('Volume $(\AA^3)$')
 	plt.savefig('volume_vs_temperature.pdf')
 	plt.close('all')
-	
+
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def plot_thermal_expansion_vs_temperature(file_name):
@@ -370,8 +371,8 @@ def plot_thermal_expansion_vs_temperature(file_name):
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def get_list_directories():
-	D = [] 
-	for l in os.listdir("."): 
+	D = []
+	for l in os.listdir("."):
 		if os.path.isdir(l):
 			D.append(l)
 	return sorted(D)
@@ -392,7 +393,7 @@ molecular_dynamics(atoms)
 atoms = read('dm.cif')
 print('Hibridizacao apos dinamica')
 hybridization_calculation(atoms)
-rfo_optimization(atoms, cif_opti_file = 'rfo.cif')	
+rfo_optimization(atoms, cif_opti_file = 'rfo.cif')
 atoms = read('rfo.cif')
 print('Hibridizacao apos RFO')
 hybridization_calculation(atoms)
@@ -407,10 +408,10 @@ end =   number_points//2 + displacement
 percentage = 3
 perc_list = list(range(start,end+1))
 for p in perc_list:
-		
+
 	atoms = read('opti.cif')
 	factor_mul = 1 + (p * (2.0*percentage)/(number_points-1))/100.0
-	
+
 	factor_dir = "{:.4f}".format(factor_mul)
 	cur_dir = os.getcwd()
 	os.mkdir(factor_dir)
@@ -418,12 +419,12 @@ for p in perc_list:
 	vol = factor_mul * atoms.get_volume() * 1.014
 	a = vol ** (1./3)
 	atoms.set_cell([a, a, a, 90, 90, 90], scale_atoms=True)
-	
+
 	v = atoms.get_volume()
 	atomic_position_optimization(atoms, factor_dir)
-		
+
 	cif_opti_file = 'opti_' + factor_dir + '.cif'
- 
+
 	atoms = read(cif_opti_file)
 	print('Hibridizacao apos otimizacao a volume constante: %s' % factor_dir)
 	hybridization_calculation(atoms)
@@ -449,7 +450,7 @@ MFREE_FIT = calc_free_energy(MF_FIT, N_kpoints, PE, T)
 print(T)
 print(MFREE_FIT)
 
-V_FIT = [] 
+V_FIT = []
 num_temp = np.shape(MFREE_FIT)[0]
 for t in range(num_temp):
 	F = MFREE_FIT[t,:]

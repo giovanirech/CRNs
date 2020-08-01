@@ -18,8 +18,6 @@ from ase.eos import EquationOfState
 from ase.neighborlist import NeighborList
 from ase.data import covalent_radii
 
-from scipy.optimize import minimize
-from scipy.optimize import curve_fit
 from lmfit import fit_report, Minimizer, Parameters
 
 #------------------------------------------------------------------------------
@@ -27,7 +25,6 @@ from lmfit import fit_report, Minimizer, Parameters
 
 DISTANCE_MIN = 1.7
 DISTANCE_MAX = 2.0
-
 DISTANCE = 1.85
 
 #------------------------------------------------------------------------------
@@ -316,13 +313,13 @@ def fit_frequency_vs_volume(V, MF):
 def fit_volume_vs_temperature(T, V):
 
 	params = Parameters()
-	params.add('a0', value= round(V[0]), min=0, max=100000)
-	params.add('a1', value=0, min=-1000, max=1000)
-	params.add('a2', value=0, min=-1000, max=1000)
-	params.add('a3', value=0, min=-1000, max=1000)
+	params.add('a0', min=0, max=100000)
+	params.add('a1', min=-1000, max=1000)
+	params.add('a2', min=-1000, max=1000)
+	params.add('a3', min=-1000, max=1000)
 
 	min = Minimizer(func2min, params, fcn_args=(T, V))
-	kws={'popsize':10}
+	kws={'popsize':30}
 	out = min.minimize(method='differential_evolution', **kws)
 	fit = func2min(out.params, T, V)
 
@@ -333,7 +330,7 @@ def fit_volume_vs_temperature(T, V):
 	fit = func2min(out.params, T, V)
 
 	print(fit_report(out), flush=True)
-
+	
 	a0 = out.params['a0'].value
 	a1 = out.params['a1'].value
 	a2 = out.params['a2'].value

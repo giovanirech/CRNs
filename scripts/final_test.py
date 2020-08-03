@@ -57,7 +57,7 @@ for c in CRNS:
 
 	D = get_list_directories()
 	
-	flag_opt_error = optimization_error(D):
+	flag_opt_error = optimization_error(D)
 	flag_negative_freq = negative_frequencies(D) 
 
 	os.chdir('..')

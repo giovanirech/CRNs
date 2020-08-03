@@ -371,7 +371,7 @@ def plot_thermal_expansion_vs_temperature(file_name):
 def get_list_directories():
 	D = []
 	for l in os.listdir("."):
-		if os.path.isdir(l):
+		if os.path.isdir(l) and l != 'amorph_arquivos':
 			D.append(l)
 	return sorted(D)
 
@@ -402,6 +402,7 @@ full_optimization(atoms, cif_opti_file = 'opti.cif')
 atoms = read('opti.cif')
 print('Hibridizacao apos otimizacao completa')
 hybridization_calculation(atoms)
+
 
 displacement = 0
 number_points = 9
@@ -469,6 +470,5 @@ A = thermal_expansion_coefficient(T, a0, a1, a2, a3)
 np.savetxt('thermal_expansion_coefficient.dat', np.transpose([T,A]), fmt='%.6f')
 
 plot_thermal_expansion_vs_temperature('thermal_expansion_coefficient.dat')
-
 
 

@@ -57,21 +57,19 @@ for c in CRNS:
 
 	D = get_list_directories()
 	
-	if optimization_error(D):
-		print('%s: Optimization Error' % c )
-		#shutil.rmtree(crn)
-	elif negative_frequencies(D):
-		print('%s: Negative Frequencies ' % c) 
-		#shutil.rmtree(crn)
-	else:
-		print('%s: OK!' % c) 
-			
-	#	print(c)
+	flag_opt_error = optimization_error(D):
+	flag_negative_freq = negative_frequencies(D) 
 
 	os.chdir('..')
 
-
-	
+	if flag_opt_error:
+		print('%s: Optimization Error' % c )
+		shutil.rmtree(c)
+	elif flag_negative_freq:
+		print('%s: Negative Frequencies ' % c) 
+		shutil.rmtree(c)
+	else:
+		print('%s: OK!' % c) 
 		
 		
 

@@ -72,59 +72,53 @@ worksheet = workbook.add_worksheet()
 
 headers = ['CRN', 'VOL', 'B0', 'CET_100', 'CET_300', 'SP2_PERC', 'SP' , 'SP2', 'SP3' ]
 
+headers_format = workbook.add_format({'bold': True, 'bg_color': 'yellow', 'valign': 'center', 'border': 1})
+
 column = 0
 for h in headers:
-	worksheet.write(0, column, h)
+	worksheet.write(0, column, h, headers_format)
 	column += 1
 
+cell_format = workbook.add_format({'border': 1})
 row = 1
 for c in CRNS:
 	column = 0
 
 	name = c
-	worksheet.write(row, column, name)
+	worksheet.write(row, column, name, cell_format)
 	column += 1
 	
 	v = get_volume(c)
-	worksheet.write(row, column, v)
+	worksheet.write(row, column, v, cell_format)
 	column += 1
 	
 	b = get_bulk_modulus(c)
-	worksheet.write(row, column, b)
+	worksheet.write(row, column, b, cell_format)
 	column += 1
 	
 	cet100 = get_cet(c, 100)
-	worksheet.write(row, column, cet100)
+	worksheet.write(row, column, cet100, cell_format)
 	column += 1
 
 	cet300 = get_cet(c, 300)
-	worksheet.write(row, column, cet300)
+	worksheet.write(row, column, cet300, cell_format)
 	column += 1
 
 	sp, sp2, sp3 = get_hybridization(c)
 	
 	sp2_perc = sp2_hybridization_percentage(sp, sp2, sp3)
-	worksheet.write(row, column, sp2_perc)
+	worksheet.write(row, column, sp2_perc, cell_format)
 	column += 1
 
-	worksheet.write(row, column, sp)
+	worksheet.write(row, column, sp, cell_format)
 	column += 1
 
-	worksheet.write(row, column, sp2)
+	worksheet.write(row, column, sp2, cell_format)
 	column += 1
 
-	worksheet.write(row, column, sp3)
+	worksheet.write(row, column, sp3, cell_format)
 	column += 1
 	
 	row += 1
 
-	'''
-	print(c)
-	print(v)	
-	print(b)
-	print(sp, sp2, sp3)
-		print(sp2_perc)
-
-	get_cet(c, 100)
-	'''
 workbook.close() 	

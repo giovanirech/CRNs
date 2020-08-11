@@ -103,10 +103,24 @@ def hybridization_calculation(atoms):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
+def pre_optimization ( atoms ):
+
+	c = Conditions(atoms)
+
+	calc = GULP(keywords='conp opti conj isotropic', options=['maxcyc 2000', 'gtol 0.001', 'ftol 0.0001', 'output cif pre.cif'],  library='brenner', conditions=c)
+	atoms.set_calculator(calc)
+	print(atoms.get_potential_energy(), flush=True)
+
+	shutil.copy2('gulp.gin', 'gulp_pre_opt.gin')
+	shutil.copy2('gulp.got', 'gulp_pre_opt.got')
+
+	
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 def molecular_dynamics(atoms):
 
 	c = Conditions(atoms)
-	calc = GULP(keywords='conp md isotropic', options=['integrator leapfrog verlet', 'ensemble npt 0.0005 0.0005', 'temperature 50','equilibration 5.0 ps', 'timestep 0.0001 ps', 'sample 0.0050', 'output cif dm.cif'], library='brenner', conditions=c)
+	calc = GULP(keywords='conv md', options=['integrator leapfrog verlet', 'ensemble nvt 0.1', 'temperature 50','equilibration 5.0 ps', 'timestep 0.0001 ps', 'sample 0.0050', 'output cif dm.cif'], library='brenner', conditions=c)
 
 	atoms.set_calculator(calc)
 	print(atoms.get_potential_energy(), flush=True)
@@ -116,23 +130,10 @@ def molecular_dynamics(atoms):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def rfo_optimization(atoms, cif_opti_file):
+def full_optimization(atoms):
 
 	c = Conditions(atoms)
-	calc = GULP(keywords='conp opti rfo isotropic prop phonon', options=['maxcyc 2000', 'output cif ' + cif_opti_file],  library='brenner ', conditions=c)
-	atoms.set_calculator(calc)
-	print(atoms.get_potential_energy(), flush=True)
-
-	shutil.copy2('gulp.gin','gulp_rfo.gin')
-	shutil.copy2('gulp.got','gulp_rfo.got')
-
-
-#------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
-def full_optimization(atoms, cif_opti_file):
-
-	c = Conditions(atoms)
-	calc = GULP(keywords='conp opti lbfgs isotropic prop phonon', options=['maxcyc 2000', 'output cif ' + cif_opti_file],  library='brenner', conditions=c)
+	calc = GULP(keywords='conp opti conj isotropic prop phonon', options=['switch rfo gnorm 0.01', 'maxcyc 2000', 'output cif opti.cif'],  library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 	print(atoms.get_potential_energy(), flush=True)
 
@@ -147,7 +148,7 @@ def atomic_position_optimization(atoms, factor_dir):
 	c = Conditions(atoms)
 
 	cif_opti_file = 'opti_' + factor_dir + '.cif'
-	calc = GULP(keywords='conv opti lbfgs isotropic', options=['maxcyc 2000', 'output cif ' + cif_opti_file], library='brenner', conditions=c)
+	calc = GULP(keywords='conv opti conj isotropic', options=['maxcyc 2000', 'output cif ' + cif_opti_file], library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 
 	pe = atoms.get_potential_energy()
@@ -388,21 +389,21 @@ atoms = read('amorph.xyz')
 print('Hibridizacao apos Amorph')
 hybridization_calculation(atoms)
 
+
+pre_optimization(atoms)
+atoms = read('pre.cif')
+print('Hibridizacao apos Pre-otimizacao')
+hybridization_calculation(atoms)
+
 molecular_dynamics(atoms)
 atoms = read('dm.cif')
 print('Hibridizacao apos dinamica')
 hybridization_calculation(atoms)
 
-rfo_optimization(atoms, cif_opti_file = 'rfo.cif')
-atoms = read('rfo.cif')
-print('Hibridizacao apos RFO')
-hybridization_calculation(atoms)
-
-full_optimization(atoms, cif_opti_file = 'opti.cif')
+full_optimization(atoms)
 atoms = read('opti.cif')
 print('Hibridizacao apos otimizacao completa')
 hybridization_calculation(atoms)
-
 
 displacement = 0
 number_points = 9
@@ -410,7 +411,7 @@ number_points = 9
 start = - (number_points//2) + displacement
 end =   number_points//2 + displacement
 
-percentage = 3
+percentage = 2
 
 perc_list = list(range(start,end+1))
 for p in perc_list:

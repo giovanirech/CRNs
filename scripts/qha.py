@@ -101,20 +101,7 @@ def hybridization_calculation(atoms):
 	print("-------------------------------------", flush=True)
 	print("-------------------------------------", flush=True)
 
-#------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
-def pre_optimization ( atoms ):
 
-	c = Conditions(atoms)
-
-	calc = GULP(keywords='conp opti conj isotropic', options=['maxcyc 2000', 'gtol 0.001', 'ftol 0.0001', 'output cif pre.cif'],  library='brenner', conditions=c)
-	atoms.set_calculator(calc)
-	print(atoms.get_potential_energy(), flush=True)
-
-	shutil.copy2('gulp.gin', 'gulp_pre_opt.gin')
-	shutil.copy2('gulp.got', 'gulp_pre_opt.got')
-
-	
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def molecular_dynamics(atoms):
@@ -130,10 +117,24 @@ def molecular_dynamics(atoms):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
+def rfo_optimization ( atoms ):
+
+	c = Conditions(atoms)
+
+	calc = GULP(keywords='conp opti rfo isotropic', options=['maxcyc 2000', 'output cif rfo.cif'],  library='brenner', conditions=c)
+	atoms.set_calculator(calc)
+	print(atoms.get_potential_energy(), flush=True)
+
+	shutil.copy2('gulp.gin', 'gulp_rfo_opt.gin')
+	shutil.copy2('gulp.got', 'gulp_rfo_opt.got')
+
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 def full_optimization(atoms):
 
 	c = Conditions(atoms)
-	calc = GULP(keywords='conp opti conj isotropic prop phonon', options=['switch rfo gnorm 0.01', 'maxcyc 2000', 'output cif opti.cif'],  library='brenner', conditions=c)
+	calc = GULP(keywords='conp opti conj isotropic prop phonon', options=['maxcyc 2000', 'output cif opti.cif'],  library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 	print(atoms.get_potential_energy(), flush=True)
 
@@ -384,20 +385,20 @@ if ( len(sys.argv) != 2 ):
 	sys.exit(0)
 
 change_format_xyz(sys.argv[1], 'amorph.xyz')
-
+'''
 atoms = read('amorph.xyz')
 print('Hibridizacao apos Amorph')
 hybridization_calculation(atoms)
 
-
-pre_optimization(atoms)
-atoms = read('pre.cif')
-print('Hibridizacao apos Pre-otimizacao')
-hybridization_calculation(atoms)
-
 molecular_dynamics(atoms)
+'''
 atoms = read('dm.cif')
 print('Hibridizacao apos dinamica')
+hybridization_calculation(atoms)
+
+rfo_optimization(atoms)
+atoms = read('rfo.cif')
+print('Hibridizacao apos Pre-otimizacao')
 hybridization_calculation(atoms)
 
 full_optimization(atoms)
@@ -435,18 +436,22 @@ for p in perc_list:
 	print('Hibridizacao apos otimizacao a volume constante: %s' % factor_dir)
 	hybridization_calculation(atoms)
 
-	phonon_calculation(atoms, factor_dir)
+#   phonon_calculation(atoms, factor_dir)
 	os.chdir(cur_dir)
 
 D = get_list_directories()
 
 V = get_volumes(D)
 PE = get_potential_energy(D)
+
+'''
 N_kpoints = get_Nkpoints(D)
+'''
 
 np.savetxt('potential_energy_vs_volume.dat',  np.transpose([V,PE]), fmt='%.6f')
 fit_potential_energy_vs_volume(V, PE)
 
+'''
 MF = get_frequencies(D)
 MF_FIT = fit_frequency_vs_volume(V, MF)
 
@@ -472,4 +477,4 @@ np.savetxt('thermal_expansion_coefficient.dat', np.transpose([T,A]), fmt='%.6f')
 
 plot_thermal_expansion_vs_temperature('thermal_expansion_coefficient.dat')
 
-
+'''

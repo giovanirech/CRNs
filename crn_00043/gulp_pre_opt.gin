@@ -1,4 +1,4 @@
-conp opti conj isotropic
+conp opti lbfgs isotropic
 title
 ASE calculation
 end
@@ -72,7 +72,5 @@ frac
  C  core  0.6231753   0.8364385   0.8333216
 
 brenner
-maxcyc 2000
-gtol 0.001
-ftol 0.0001
+maxcyc 500
 output cif pre.cif

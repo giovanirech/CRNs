@@ -101,6 +101,18 @@ def hybridization_calculation(atoms):
 	print("-------------------------------------", flush=True)
 	print("-------------------------------------", flush=True)
 
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+def pre_optimization ( atoms ):
+
+	c = Conditions(atoms)
+
+	calc = GULP(keywords='conp opti lbfgs isotropic', options=['maxcyc 500', 'output cif pre.cif'],  library='brenner', conditions=c)
+	atoms.set_calculator(calc)
+	print(atoms.get_potential_energy(), flush=True)
+
+	shutil.copy2('gulp.gin', 'gulp_pre_opt.gin')
+	shutil.copy2('gulp.got', 'gulp_pre_opt.got')
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -134,7 +146,7 @@ def rfo_optimization ( atoms ):
 def full_optimization(atoms):
 
 	c = Conditions(atoms)
-	calc = GULP(keywords='conp opti conj isotropic prop phonon', options=['maxcyc 2000', 'output cif opti.cif'],  library='brenner', conditions=c)
+	calc = GULP(keywords='conp opti lbfgs isotropic prop phonon', options=['maxcyc 2000', 'output cif opti.cif'],  library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 	print(atoms.get_potential_energy(), flush=True)
 
@@ -149,7 +161,7 @@ def atomic_position_optimization(atoms, factor_dir):
 	c = Conditions(atoms)
 
 	cif_opti_file = 'opti_' + factor_dir + '.cif'
-	calc = GULP(keywords='conv opti conj isotropic', options=['maxcyc 2000', 'output cif ' + cif_opti_file], library='brenner', conditions=c)
+	calc = GULP(keywords='conv opti lbfgs isotropic', options=['maxcyc 2000', 'output cif ' + cif_opti_file], library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 
 	pe = atoms.get_potential_energy()
@@ -385,13 +397,17 @@ if ( len(sys.argv) != 2 ):
 	sys.exit(0)
 
 change_format_xyz(sys.argv[1], 'amorph.xyz')
-'''
+
 atoms = read('amorph.xyz')
 print('Hibridizacao apos Amorph')
 hybridization_calculation(atoms)
 
+pre_optimization(atoms)
+atoms = read('pre.cif') 
+print('Hibridizacao apos pre-otimizacao')
+hybridization_calculation(atoms)
+
 molecular_dynamics(atoms)
-'''
 atoms = read('dm.cif')
 print('Hibridizacao apos dinamica')
 hybridization_calculation(atoms)

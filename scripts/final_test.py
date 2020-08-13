@@ -29,10 +29,9 @@ def optimization_error(directories):
 		try:
 			ret = subprocess.check_output('grep \'**** Optimisation achieved ****\' ' + d + '/gulp_opti_*.got', shell=True)
 		except:
-			return True
-
-	return False	
-
+                        print('Deformacao: %s' % d)
+                        return True
+	return False
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def get_list_directories():
@@ -58,16 +57,16 @@ for c in CRNS:
 	D = get_list_directories()
 	
 	flag_opt_error = optimization_error(D)
-	flag_negative_freq = negative_frequencies(D) 
+	#flag_negative_freq = negative_frequencies(D) 
 
 	os.chdir('..')
 
 	if flag_opt_error:
 		print('%s: Optimization Error' % c )
-		shutil.rmtree(c)
-	elif flag_negative_freq:
-		print('%s: Negative Frequencies ' % c) 
-		shutil.rmtree(c)
+	#	shutil.rmtree(c)
+	#elif flag_negative_freq:
+	#	print('%s: Negative Frequencies ' % c) 
+	#	shutil.rmtree(c)
 	else:
 		print('%s: OK!' % c) 
 		

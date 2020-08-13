@@ -14,8 +14,8 @@ file_import = 'crn.import'
 file_run = 'run.sh'
 amorph_directory_output = 'amorph_arquivos'
 path_amorph = '/opt/amorph'
-steps_pre_in = 1.28e6
-steps_crn_in = 2.56e7
+steps_pre_in = 1.28e7
+steps_crn_in = 2.56e8
 amorph_stdout = 'amorph.txt'
 file_crn_xyz = 'crn.xyz'
 

@@ -107,7 +107,7 @@ def pre_optimization ( atoms ):
 
 	c = Conditions(atoms)
 
-	calc = GULP(keywords='conp opti lbfgs isotropic', options=['maxcyc 500', 'output cif pre.cif'],  library='brenner', conditions=c)
+	calc = GULP(keywords='conp opti conj isotropic', options=['maxcyc 500', 'output cif pre.cif'],  library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 	print(atoms.get_potential_energy(), flush=True)
 
@@ -146,7 +146,7 @@ def rfo_optimization ( atoms ):
 def full_optimization(atoms):
 
 	c = Conditions(atoms)
-	calc = GULP(keywords='conp opti lbfgs isotropic prop phonon', options=['maxcyc 2000', 'output cif opti.cif'],  library='brenner', conditions=c)
+	calc = GULP(keywords='conp opti conj isotropic prop phonon', options=['maxcyc 2000', 'output cif opti.cif'],  library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 	print(atoms.get_potential_energy(), flush=True)
 
@@ -161,7 +161,7 @@ def atomic_position_optimization(atoms, factor_dir):
 	c = Conditions(atoms)
 
 	cif_opti_file = 'opti_' + factor_dir + '.cif'
-	calc = GULP(keywords='conv opti lbfgs isotropic', options=['maxcyc 2000', 'output cif ' + cif_opti_file], library='brenner', conditions=c)
+	calc = GULP(keywords='conv opti conj isotropic', options=['maxcyc 2000', 'output cif ' + cif_opti_file], library='brenner', conditions=c)
 	atoms.set_calculator(calc)
 
 	pe = atoms.get_potential_energy()
@@ -441,7 +441,7 @@ for p in perc_list:
 	os.mkdir(factor_dir)
 	os.chdir(factor_dir)
 
-	vol = factor_mul * atoms.get_volume() * 1.014
+	vol = factor_mul * atoms.get_volume() 
 	a = vol ** (1./3)
 	atoms.set_cell([a, a, a, 90, 90, 90], scale_atoms=True)
 	atomic_position_optimization(atoms, factor_dir)

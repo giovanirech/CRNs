@@ -8,5 +8,5 @@ for d in directories:
 	if os.path.isdir(d):
 		os.chdir(d)
 		print(os.getcwd(), flush=True)
-		os.system('python3 ../../scripts/qha.py crn.xyz >> output.txt &')
+		os.system('python3 ../../../scripts/qha.py crn.xyz >> output.txt &')
 		os.chdir('..')

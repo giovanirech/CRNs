@@ -1,0 +1,138 @@
+********************************************************************************
+*                       GENERAL UTILITY LATTICE PROGRAM                        *
+*                                 Julian Gale                                  *
+*                       Curtin Institute for Computation                       *
+*                           Department of Chemistry                            *
+*                    Curtin University, Western Australia                      *
+********************************************************************************
+* Version = 5.1.0 * Last modified = 25th January 2020                          *
+********************************************************************************
+*  single       - perform a single point run                                   *
+********************************************************************************
+* ASE calculation                                                              *
+********************************************************************************
+
+
+  Job Started  at 18:10.56 14th August     2020                               
+
+  Number of CPUs =     1
+
+
+  Total number of configurations input =      1
+
+********************************************************************************
+*  Input for Configuration =   1                                               *
+********************************************************************************
+
+  Formula = C8                                                          
+
+  Number of irreducible atoms/shells =       8
+
+
+  Total number atoms/shells =       8
+
+  Dimensionality = 3               :  Bulk   
+
+
+
+  Cartesian lattice vectors (Angstroms) :
+
+        3.561053    0.000000    0.000000
+        0.000000    3.561053    0.000000
+        0.000000    0.000000    3.561053
+
+  Cell parameters (Angstroms/Degrees):
+
+  a =       3.5611    alpha =  90.0000
+  b =       3.5611    beta  =  90.0000
+  c =       3.5611    gamma =  90.0000
+
+  Initial cell volume =          45.158064 Angs**3
+
+  Temperature of configuration =  0.000     K 
+
+  Pressure of configuration =         0.000 GPa 
+
+  Fractional coordinates of asymmetric unit :
+
+--------------------------------------------------------------------------------
+   No.  Atomic       x           y          z         Charge      Occupancy
+        Label      (Frac)      (Frac)     (Frac)        (e)         (Frac)  
+--------------------------------------------------------------------------------
+      1 C     c    0.000000    0.000000    0.000000     0.00000    1.000000    
+      2 C     c    0.000000    0.500000    0.500000     0.00000    1.000000    
+      3 C     c    0.500000    0.500000    0.000000     0.00000    1.000000    
+      4 C     c    0.500000    0.000000    0.500000     0.00000    1.000000    
+      5 C     c    0.750000    0.250000    0.750000     0.00000    1.000000    
+      6 C     c    0.250000    0.250000    0.250000     0.00000    1.000000    
+      7 C     c    0.250000    0.750000    0.750000     0.00000    1.000000    
+      8 C     c    0.750000    0.750000    0.250000     0.00000    1.000000    
+--------------------------------------------------------------------------------
+
+
+
+********************************************************************************
+*  General input information                                                   *
+********************************************************************************
+
+  Species output for all configurations : 
+
+--------------------------------------------------------------------------------
+  Species    Type    Atomic    Atomic    Charge       Radii (Angs)     Library
+                     Number     Mass       (e)     Cova   Ionic  VDW   Symbol
+--------------------------------------------------------------------------------
+    C        Core        6      12.01   0.000000   0.770  0.000  1.530          
+--------------------------------------------------------------------------------
+
+
+  Lattice summation method               =    Ewald          (3-D)
+                                         =    Parry          (2-D)
+                                         =    Saunders et al (1-D)
+  Accuracy factor for lattice sums       =   12.000
+
+
+  Time limit = Infinity
+
+  Maximum range for interatomic potentials =    100000.000000 Angstroms
+
+  Brenner et al 2002 potential to be used with explicit splines for P
+
+
+********************************************************************************
+*  Output for configuration   1                                                *
+********************************************************************************
+
+
+  Components of energy : 
+
+--------------------------------------------------------------------------------
+  Interatomic potentials     =           0.00000000 eV    
+  Brenner potentials         =         -58.95692926 eV    
+  Monopole - monopole (real) =           0.00000000 eV    
+  Monopole - monopole (recip)=           0.00000000 eV    
+  Monopole - monopole (total)=           0.00000000 eV    
+--------------------------------------------------------------------------------
+  Total lattice energy       =         -58.95692926 eV    
+--------------------------------------------------------------------------------
+  Total lattice energy       =           -5688.4424 kJ/(mole unit cells)
+--------------------------------------------------------------------------------
+
+  Peak dynamic memory used =       0.53 MB 
+
+
+  Timing analysis for GULP :
+
+--------------------------------------------------------------------------------
+  Task / Subroutine                                          Time (Seconds)
+--------------------------------------------------------------------------------
+  Calculation of Brenner energy and derivatives                   0.0002
+--------------------------------------------------------------------------------
+  Total CPU time                                                  0.0021
+--------------------------------------------------------------------------------
+
+
+  CIF file written as single_0.9925.cif
+
+
+  Job Finished at 18:10.56 14th August     2020                               
+

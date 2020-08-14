@@ -1,10 +1,10 @@
-conv opti lbfgs isotropic
+single
 title
 ASE calculation
 end
 
 cell
- 3.552060  3.552060  3.552060 90.00000 90.00000 90.00000
+ 3.622766  3.622766  3.622766 90.00000 90.00000 90.00000
 frac
  C  core  0.0000000   0.0000000   0.0000000
  C  core  0.0000000   0.5000000   0.5000000
@@ -17,4 +17,4 @@ frac
 
 brenner
 maxcyc 2000
-output cif opti_0.9850.cif
+output cif single_1.0450.cif

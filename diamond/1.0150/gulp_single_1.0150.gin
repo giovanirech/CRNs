@@ -1,4 +1,4 @@
-conv opti lbfgs isotropic
+single
 title
 ASE calculation
 end
@@ -17,4 +17,4 @@ frac
 
 brenner
 maxcyc 2000
-output cif opti_1.0150.cif
+output cif single_1.0150.cif

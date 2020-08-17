@@ -1,0 +1,96 @@
+Hibridizacao apos otimizacao a volume constante: 0.9850
+-------------------------------------
+------- HYBRIDIZATION ---------------
+[0, 0, 0, 0, 8, 0, 0, 0, 0, 0]
+-------------------------------------
+-------------------------------------
+Hibridizacao apos otimizacao a volume constante: 0.9925
+-------------------------------------
+------- HYBRIDIZATION ---------------
+[0, 0, 0, 0, 8, 0, 0, 0, 0, 0]
+-------------------------------------
+-------------------------------------
+Hibridizacao apos otimizacao a volume constante: 1.0000
+-------------------------------------
+------- HYBRIDIZATION ---------------
+[0, 0, 0, 0, 8, 0, 0, 0, 0, 0]
+-------------------------------------
+-------------------------------------
+Hibridizacao apos otimizacao a volume constante: 1.0075
+-------------------------------------
+------- HYBRIDIZATION ---------------
+[0, 0, 0, 0, 8, 0, 0, 0, 0, 0]
+-------------------------------------
+-------------------------------------
+Hibridizacao apos otimizacao a volume constante: 1.0150
+-------------------------------------
+------- HYBRIDIZATION ---------------
+[0, 0, 0, 0, 8, 0, 0, 0, 0, 0]
+-------------------------------------
+-------------------------------------
+Hibridizacao apos otimizacao a volume constante: 1.0225
+-------------------------------------
+------- HYBRIDIZATION ---------------
+[0, 0, 0, 0, 8, 0, 0, 0, 0, 0]
+-------------------------------------
+-------------------------------------
+Hibridizacao apos otimizacao a volume constante: 1.0300
+-------------------------------------
+------- HYBRIDIZATION ---------------
+[0, 0, 0, 0, 8, 0, 0, 0, 0, 0]
+-------------------------------------
+-------------------------------------
+Hibridizacao apos otimizacao a volume constante: 1.0375
+-------------------------------------
+------- HYBRIDIZATION ---------------
+[0, 0, 0, 0, 8, 0, 0, 0, 0, 0]
+-------------------------------------
+-------------------------------------
+Hibridizacao apos otimizacao a volume constante: 1.0450
+-------------------------------------
+------- HYBRIDIZATION ---------------
+[0, 0, 0, 0, 8, 0, 0, 0, 0, 0]
+-------------------------------------
+-------------------------------------
+Bulk modulus: 442.102167 GPa
+[[Fit Statistics]]
+    # fitting method   = differential_evolution
+    # function evals   = 7485
+    # data points      = 30
+    # variables        = 4
+    chi-square         = 2.4926e-07
+    reduced chi-square = 9.5870e-09
+    Akaike info crit   = -550.178710
+    Bayesian info crit = -544.573921
+[[Variables]]
+    a0:  46.1961440 +/- 2.6617e-05 (0.00%) (init = 45)
+    a1:  12.6343779 +/- 8.35414252 (66.12%) (init = 0)
+    a2:  7.1551e-04 +/- 5.7816e-05 (8.08%) (init = 0)
+    a3:  876.225180 +/- 51.4849124 (5.88%) (init = 0)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a1, a3) =  0.988
+    C(a2, a3) =  0.961
+    C(a1, a2) =  0.908
+    C(a0, a2) =  0.277
+    C(a0, a3) =  0.165
+[[Fit Statistics]]
+    # fitting method   = leastsq
+    # function evals   = 26
+    # data points      = 30
+    # variables        = 4
+    chi-square         = 2.4916e-07
+    reduced chi-square = 9.5831e-09
+    Akaike info crit   = -550.190812
+    Bayesian info crit = -544.586022
+[[Variables]]
+    a0:  46.1961440 +/- 2.8322e-05 (0.00%) (init = 46.19614)
+    a1:  11.9718181 +/- 114.748967 (958.49%) (init = 12.63438)
+    a2:  7.1213e-04 +/- 7.2261e-04 (101.47%) (init = 0.0007155108)
+    a3:  875.033181 +/- 710.228807 (81.17%) (init = 876.2252)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a1, a3) =  1.000
+    C(a2, a3) =  1.000
+    C(a1, a2) =  0.999
+    C(a0, a2) =  0.382
+    C(a0, a3) =  0.373
+    C(a0, a1) =  0.368

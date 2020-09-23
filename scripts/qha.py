@@ -326,31 +326,31 @@ def fit_frequency_vs_volume(V, MF):
 #------------------------------------------------------------------------------
 def fit_volume_vs_temperature(T, V):
 
-	params = Parameters()
-	params.add('a0', min=0, max=100000)
-	params.add('a1', min=-1000, max=1000)
-	params.add('a2', min=-1000, max=1000)
-	params.add('a3', min=-1000, max=1000)
+    params = Parameters()
+    params.add('a0', min=-10, max=20000)
+    params.add('a1', min=-3000, max=3000)
+    params.add('a2', min=-1000, max=1000)
+    params.add('a3', min=-3000, max=3000)
 
-	min = Minimizer(func2min, params, fcn_args=(T, V))
-	kws={'popsize':30}
-	out = min.minimize(method='differential_evolution', **kws)
-	fit = func2min(out.params, T, V)
+    minimizer = Minimizer(func2min, params, fcn_args=(T, V))
+    kws={'popsize':120, 'mutation':(0.8,1.2), 'recombination':0.8}
+    out = minimizer.minimize(method='differential_evolution', **kws)
+    #fit = func2min(out.params, T, V)
 
-	print(fit_report(out), flush=True)
-	
-	min = Minimizer(func2min, params=out.params, fcn_args=(T, V))
-	out = min.minimize(method='leastsq')
-	fit = func2min(out.params, T, V)
+    print(fit_report(out), flush=True)
 
-	print(fit_report(out), flush=True)
-	
-	a0 = out.params['a0'].value
-	a1 = out.params['a1'].value
-	a2 = out.params['a2'].value
-	a3 = out.params['a3'].value
+    a0 = out.params['a0'].value
+    a1 = out.params['a1'].value
+    a2 = out.params['a2'].value
+    a3 = out.params['a3'].value
 
-	return a0, a1, a2, a3
+    #minimizer = Minimizer(func2min, params=out.params, fcn_args=(T, V))
+    #out = minimizer.minimize(method='leastsq')
+    #fit = func2min(out.params, T, V)
+
+    #print(fit_report(out), flush=True)
+
+    return a0, a1, a2, a3
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 def thermal_expansion_coefficient(T, a0, a1, a2, a3):
@@ -360,10 +360,12 @@ def thermal_expansion_coefficient(T, a0, a1, a2, a3):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def plot_volume_vs_temperature(file_name):
+def plot_volume_vs_temperature(file_name,volume_fitted_curve):
 
 	x, y = np.loadtxt(file_name, unpack=True)
-	plt.plot(x,y,'ro-')
+	plt.plot(x,y,'ro',label='Calculated')
+	plt.plot(x,volume_fitted_curve,'r-',label='Fit')
+	plt.legend()
 	plt.xlabel('Temperature (K)')
 	plt.ylabel('Volume $(\AA^3)$')
 	plt.savefig('volume_vs_temperature.pdf')
@@ -403,7 +405,7 @@ print('Hibridizacao apos Amorph')
 hybridization_calculation(atoms)
 
 pre_optimization(atoms)
-atoms = read('pre.cif') 
+atoms = read('pre.cif')
 print('Hibridizacao apos pre-otimizacao')
 hybridization_calculation(atoms)
 
@@ -441,7 +443,7 @@ for p in perc_list:
 	os.mkdir(factor_dir)
 	os.chdir(factor_dir)
 
-	vol = factor_mul * atoms.get_volume() 
+	vol = factor_mul * atoms.get_volume()
 	a = vol ** (1./3)
 	atoms.set_cell([a, a, a, 90, 90, 90], scale_atoms=True)
 	atomic_position_optimization(atoms, factor_dir)
@@ -460,14 +462,13 @@ D = get_list_directories()
 V = get_volumes(D)
 PE = get_potential_energy(D)
 
-'''
-N_kpoints = get_Nkpoints(D)
-'''
+
 
 np.savetxt('potential_energy_vs_volume.dat',  np.transpose([V,PE]), fmt='%.6f')
 fit_potential_energy_vs_volume(V, PE)
-
 '''
+N_kpoints = get_Nkpoints(D)
+
 MF = get_frequencies(D)
 MF_FIT = fit_frequency_vs_volume(V, MF)
 
@@ -483,14 +484,14 @@ for t in range(num_temp):
 	V_FIT.append(v0)
 
 np.savetxt('volume_vs_temperature.dat', np.transpose([T,V_FIT]), fmt='%.6f')
-plot_volume_vs_temperature('volume_vs_temperature.dat')
 
 a0, a1, a2, a3 = fit_volume_vs_temperature(T,V_FIT)
+volume_fitted_curve = func(T, a0, a1, a2, a3)
+plot_volume_vs_temperature('volume_vs_temperature.dat',volume_fitted_curve)
 
 A = thermal_expansion_coefficient(T, a0, a1, a2, a3)
 
 np.savetxt('thermal_expansion_coefficient.dat', np.transpose([T,A]), fmt='%.6f')
 
 plot_thermal_expansion_vs_temperature('thermal_expansion_coefficient.dat')
-
 '''

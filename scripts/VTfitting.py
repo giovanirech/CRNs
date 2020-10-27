@@ -8,35 +8,30 @@ from time import time
 import datetime
 
 def func(x, params):
-    a0, a1, a2,a3, a4, a5 = params
-    a7, a8, a9 = 0,0,0
-    return a0 + np.exp(-(a1/x))*(a2/x**2.0 + a3/x + a4 + a5*x + a7*np.exp(-a8*(-a9+x)**2.0))
+    a0, a1, a2,a3, a4, a5, a6, a7, a8 = params
+    return a0 + np.exp(-(a1/x))*(a2/x**2.0 + a3/x + a4 + a5*x + a6*np.exp(-a7*(-a8+x)**2.0))
 
 
-def func_model(x, a0, a1, a2,a3, a4, a5):
-    a7, a8, a9 = 0,0,0
-    return a0 + np.exp(-(a1/x))*(a2/x**2.0 + a3/x + a4 + a5*x + a7*np.exp(-a8*(-a9+x)**2.0))
+def func_model(x, a0, a1, a2,a3, a4, a5, a6, a7, a8):
+    return a0 + np.exp(-(a1/x))*(a2/x**2.0 + a3/x + a4 + a5*x + a6*np.exp(-a7*(-a8+x)**2.0))
 
-def func_unc(x, a0, a1, a2, a3, a4, a5):
-    a7, a8, a9 = 0,0,0
-    return a0 + unp.exp(-(a1/x))*(a2/x**2.0 + a3/x + a4 + a5*x)
+def func_unc(x, a0, a1, a2,a3, a4, a5, a6, a7, a8):
+    return a0 + unp.exp(-(a1/x))*(a2/x**2.0 + a3/x + a4 + a5*x + a6*unp.exp(-a7*(-a8+x)**2.0))
 
 def CTE(x, params):
-    a0, a1, a2, a3,a4, a5 = params
-    #a6, a7, a8 = 0, 0, 0
-
-    dVdT = np.exp(-a1/x)*(a5-(2.0*a2)/x**3.0 - a3/x**2.0) + (a1*np.exp(-a1/x)*(a4+a2/x**2.0+a3/x+a5*x))/x**2.0
+    a0, a1, a2, a3,a4, a5, a6, a7, a8 = params
+    dVdT = (a1*np.exp(-a1/x)*(a2/x**2+a3/x+a4+a5*x+a6*np.exp(-a7*(x-a8)**2)))/x**2+np.exp(-a1/x)*(-(2*a2)/x**3-a3/x**2+a5-2*a6*a7*(x-a8)*np.exp(-a7*(x-a8)**2))
     CTE = dVdT/func(x,params)
     return CTE
 
-def CTE_model(x, a0, a1, a2, a3, a4, a5):
-    dVdT = np.exp(-a1/x)*(a5-(2.0*a2)/x**3.0 - a3/x**2.0) + (a1*np.exp(-a1/x)*(a4+a2/x**2.0+a3/x+a5*x))/x**2.0
-    CTE = 1e6*dVdT/func_model(x,a0, a1, a2,a3, a4, a5)
+def CTE_model(x, a0, a1, a2, a3, a4, a5, a6, a7, a8):
+    dVdT = (a1*np.exp(-a1/x)*(a2/x**2+a3/x+a4+a5*x+a6*np.exp(-a7*(x-a8)**2)))/x**2+np.exp(-a1/x)*(-(2*a2)/x**3-a3/x**2+a5-2*a6*a7*(x-a8)*np.exp(-a7*(x-a8)**2))
+    CTE = dVdT/func_model(x, a0, a1, a2,a3, a4, a5, a6, a7, a8)
     return CTE
 
-def CTE_unc(x, a0, a1, a2, a3, a4, a5):
-    V = a0 + unp.exp(-(a1/x))*(a2/x**2.0 + a3/x + a4 + a5*x)
-    dVdT = unp.exp(-a1/x)*(a5-(2.0*a2)/x**3.0 - a3/x**2.0) + (a1*unp.exp(-a1/x)*(a4+a2/x**2.0+a3/x+a5*x))/x**2.0
+def CTE_unc(x, a0, a1, a2, a3, a4, a5, a6, a7, a8):
+    V = a0 + unp.exp(-(a1/x))*(a2/x**2.0 + a3/x + a4 + a5*x + a6*unp.exp(-a7*(-a8+x)**2.0))
+    dVdT = (a1*unp.exp(-a1/x)*(a2/x**2+a3/x+a4+a5*x+a6*unp.exp(-a7*(x-a8)**2)))/x**2+unp.exp(-a1/x)*(-(2*a2)/x**3-a3/x**2+a5-2*a6*a7*(x-a8)*unp.exp(-a7*(x-a8)**2))
     CTE = dVdT/V
     return CTE
 
@@ -53,7 +48,10 @@ def fit_volume_vs_temperature(T, V):
                     ('a2',   0,  True,   -15000,   15000,   None, None),
                     ('a3',   0,  True,   -150,   150,   None, None),
                     ('a4',   0,  True,   -2,   2,   None, None),
-                    ('a5',   0.001,  True,   0.01,   0.01,   None, None)
+                    ('a5',   0.001,  True,   -0.01,   0.01,   None, None),
+                    ('a6',   0.0,  True,   -5,   0.0,   None, None),
+                    ('a7',   0.001,  True,   0.00001,   0.001,   None, None),
+                    ('a8',   0.001,  True,   0,   300,   None, None)
                     )
 
     minimizer = Minimizer(func2min, params, fcn_args=(T, V))
@@ -115,7 +113,7 @@ def plot_with_uncertainties(x_data, y_data, x, y, y_unc, z, z_unc):
 
     plt.tight_layout()
     plt.savefig('plotVvsT.png')
-
+    #plt.show()
 
 ##################################################################################
 
@@ -131,13 +129,13 @@ def perform_fitting_routine(temperature,volume):
         parametros = ResultDE.params
         incertezas = np.sqrt(np.diag(ResultDE.covar))
 
-        (a0,a1,a2,a3,a4,a5) = correlated_values([ResultDE.params[i].value for i in ResultDE.params.keys()], ResultDE.covar)
+        (a0,a1,a2,a3,a4,a5,a6,a7,a8) = correlated_values([ResultDE.params[i].value for i in ResultDE.params.keys()], ResultDE.covar)
 
-        v_complete = func_unc(t_fit,a0,a1,a2,a3,a4,a5)
+        v_complete = func_unc(t_fit,a0,a1,a2,a3,a4,a5,a6,a7,a8)
         v_fit = np.array([x.nominal_value for x in v_complete])
         v_unc = np.array([x.std_dev for x in v_complete])
 
-        cte_complete = CTE_unc(t_fit, a0, a1, a2, a3, a4, a5)
+        cte_complete = CTE_unc(t_fit, a0, a1, a2, a3, a4, a5,a6,a7,a8)
         cte_fit = np.array([x.nominal_value for x in cte_complete])
         cte_unc = np.array([x.std_dev for x in cte_complete])
 
@@ -170,8 +168,8 @@ def perform_fitting_routine(temperature,volume):
             v_unc = model_result.eval_uncertainty(x=t_fit)
 
             #calculating CET using correlations
-            (a0,a1,a2,a3,a4,a5) = correlated_values([parametros[i] for i in parametros], model_result.covar)
-            cte_complete = CTE_unc(t_fit, a0, a1, a2, a3, a4, a5)
+            (a0,a1,a2,a3,a4,a5, a6, a7, a8) = correlated_values([parametros[i] for i in parametros], model_result.covar)
+            cte_complete = CTE_unc(t_fit, a0, a1, a2, a3, a4, a5, a6, a7, a8)
             cte_fit = np.array([x.nominal_value for x in cte_complete])
             cte_unc = np.array([x.std_dev for x in cte_complete])
 

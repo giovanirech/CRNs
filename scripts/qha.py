@@ -7,6 +7,7 @@ import math
 import shutil
 import os
 import glob
+import VTfitting
 
 from ase.spacegroup import crystal
 from ase import Atoms
@@ -466,7 +467,7 @@ PE = get_potential_energy(D)
 
 np.savetxt('potential_energy_vs_volume.dat',  np.transpose([V,PE]), fmt='%.6f')
 fit_potential_energy_vs_volume(V, PE)
-'''
+
 N_kpoints = get_Nkpoints(D)
 
 MF = get_frequencies(D)
@@ -485,6 +486,8 @@ for t in range(num_temp):
 
 np.savetxt('volume_vs_temperature.dat', np.transpose([T,V_FIT]), fmt='%.6f')
 
+VTfitting.perform_fitting_routine(T, V_FIT)
+'''
 a0, a1, a2, a3 = fit_volume_vs_temperature(T,V_FIT)
 volume_fitted_curve = func(T, a0, a1, a2, a3)
 plot_volume_vs_temperature('volume_vs_temperature.dat',volume_fitted_curve)

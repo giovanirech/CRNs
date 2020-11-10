@@ -1,0 +1,72 @@
+######################### ./volume_vs_temperature.dat ##########################
+[[Fit Statistics]]
+    # fitting method   = differential_evolution
+    # function evals   = 177672
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 2.2934e-09
+    reduced chi-square = 9.1734e-11
+    Akaike info crit   = -688.833465
+    Bayesian info crit = -681.827478
+[[Variables]]
+    a0:  46.1960572 +/- 3.3704e-06 (0.00%) (init = 400)
+    a1:  692.273133 +/- 9.80513938 (1.42%) (init = 100)
+    a2:  0 (fixed)
+    a3:  25.7297933 +/- 1.24016802 (4.82%) (init = 0)
+    a4: -0.23955497 +/- 0.00722562 (3.02%) (init = 0)
+    a5:  9.1463e-04 +/- 2.4537e-05 (2.68%) (init = 0.001)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a3, a5) =  0.996
+    C(a3, a4) = -0.987
+    C(a4, a5) = -0.977
+    C(a1, a5) =  0.957
+    C(a1, a3) =  0.938
+    C(a1, a4) = -0.874
+    C(a0, a1) =  0.424
+    C(a0, a5) =  0.298
+    C(a0, a3) =  0.237
+    C(a0, a4) = -0.174
+Cost: -0.013165153494149706
+---------- DE bounds ----------
+a0 :         0	     46.1961	    8000
+a1 :         0	     692.273	    2000
+a2 :   -150000	           0	  150000
+a3 :     -3000	     25.7298	    3000
+a4 :        -5	   -0.239555	       5
+a5 :     1e-05	 0.000914626	    0.15
+a6 :        -5	           0	     0.0
+a7 :     1e-05	       0.001	   0.001
+a8 :         0	       0.001	     300
+[[Fit Statistics]]
+    # fitting method   = Nelder-Mead
+    # function evals   = 174
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 3.0644e-09
+    reduced chi-square = 1.2258e-10
+    Akaike info crit   = -680.137903
+    Bayesian info crit = -673.131916
+[[Variables]]
+    a0:  46.1960513 +/- 3.8738e-06 (0.00%) (init = 46.19606)
+    a1:  683.866125 +/- 12.4468497 (1.82%) (init = 692.2731)
+    a2:  0 (fixed)
+    a3:  25.9000331 +/- 1.64041914 (6.33%) (init = 25.72979)
+    a4: -0.24350902 +/- 0.00988453 (4.06%) (init = -0.239555)
+    a5:  9.1345e-04 +/- 3.2816e-05 (3.59%) (init = 0.000914626)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a3, a5) =  0.997
+    C(a3, a4) = -0.993
+    C(a4, a5) = -0.987
+    C(a1, a5) =  0.970
+    C(a1, a3) =  0.957
+    C(a1, a4) = -0.919
+    C(a0, a1) =  0.403
+    C(a0, a5) =  0.300
+    C(a0, a3) =  0.249
+    C(a0, a4) = -0.208

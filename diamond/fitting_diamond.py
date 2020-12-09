@@ -174,10 +174,10 @@ N = 5
 cte_up = cte_nominal+N*cte_unc
 cte_down = cte_nominal-N*cte_unc
 #ax2.fill_between(t_fit, cte_up, cte_down, facecolor='#888888', alpha=0.5, label = f'{N}$\sigma$', edgecolor=None)
-ax2.plot(t_fit, 1e6*y_exp, '.k',label='PRB 83, 104102 (2011)')
-ax2.plot(t_fit, 1e6*cte_nominal, label='Fit', color='red')
+ax2.plot(t_fit, 1e6*y_exp, '.k',label="Stoupin & Shvy'dko (2011)")
+ax2.plot(t_fit, 1e6*cte_nominal, label='This work', color='red')
 ax2.set_xlabel('Temperature (K)')
-ax2.set_ylabel('CET (10$^6$K$^{-1}$)')
+ax2.set_ylabel('Volumetric thermal expansion\n coefficient (10$^{-6}$K$^{-1}$)')
 ax2.legend()
 #plt.suptitle(file)
 plt.savefig('thermal_expansion_vs_temperature.pdf')

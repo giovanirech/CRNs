@@ -1,0 +1,299 @@
+############################################## Shrink ##############################################
+######################### ./volume_vs_temperature4.dat #########################
+[[Fit Statistics]]
+    # fitting method   = ampgo, with L-BFGS-B as local solver
+    # function evals   = 33222
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 2.9934e-04
+    reduced chi-square = 1.1974e-05
+    Akaike info crit   = -335.453950
+    Bayesian info crit = -328.447963
+[[Variables]]
+    a0:  3528.18191 +/- 0.00154804 (0.00%) (init = 400)
+    a1:  715.992881 +/- 42.8063088 (5.98%) (init = 100)
+    a2:  0 (fixed)
+    a3:  520.003138 +/- 219.650499 (42.24%) (init = 0)
+    a4:  1.25695530 +/- 2.99010511 (237.88%) (init = 0)
+    a5:  0.03213343 +/- 0.00449334 (13.98%) (init = 0.001)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a4, a5) = -0.961
+    C(a1, a4) =  0.818
+    C(a0, a4) =  0.771
+    C(a0, a5) = -0.701
+    C(a0, a1) =  0.679
+    C(a1, a5) = -0.631
+    C(a3, a5) =  0.572
+    C(a3, a4) = -0.339
+    C(a1, a3) =  0.261
+    C(a0, a3) = -0.218
+Cost: -0.06189467689864614
+---------- DE bounds ----------
+a0 :         0	     3528.18	    8000
+a1 :         0	     715.993	    2000
+a2 :   -150000	           0	  150000
+a3 :     -3000	     520.003	    3000
+a4 :        -5	     1.25696	       5
+a5 :     1e-05	   0.0321334	    0.15
+a6 :        -5	           0	     0.0
+a7 :     1e-05	       0.001	   0.001
+a8 :         0	       0.001	     300
+       99.73%    95.45%    68.27%    _BEST_    68.27%    95.45%    99.73%
+ a0:      -inf      -inf      -inf3528.17931      +inf      +inf      +inf
+ a1:  -7.83182  -4.17764  -1.87961 685.64517      +inf      +inf      +inf
+ a3: -66.54288 -33.24297 -11.657961043.17809      +inf      +inf      +inf
+ a4:      -inf      -inf      -inf  -4.90968  +0.02244  +0.08017  +0.16837
+ a5:  -0.00029      +nan      +nan   0.04306      +inf      +inf      +inf
+[[Fit Statistics]]
+    # fitting method   = Nelder-Mead
+    # function evals   = 911
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 6.6609e-07
+    reduced chi-square = 2.6643e-08
+    Akaike info crit   = -518.691300
+    Bayesian info crit = -511.685313
+[[Variables]]
+    a0:  3528.17931 +/- 5.7775e-05 (0.00%) (init = 3528.182)
+    a1:  685.645172 +/- 3.27367561 (0.48%) (init = 715.9929)
+    a2:  0 (fixed)
+    a3:  1043.17809 +/- 30.3248087 (2.91%) (init = 520.0031)
+    a4: -4.90968144 +/- 0.07835848 (1.60%) (init = 1.256955)
+    a5:  0.04305627 +/- 3.0662e-04 (0.71%) (init = 0.03213343)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a3, a5) =  0.988
+    C(a1, a3) =  0.977
+    C(a1, a5) =  0.938
+    C(a4, a5) = -0.930
+    C(a3, a4) = -0.869
+    C(a1, a4) = -0.747
+    C(a0, a1) =  0.462
+    C(a0, a3) =  0.361
+    C(a0, a5) =  0.320
+    C(a0, a4) = -0.102
+######################### ./volume_vs_temperature6.dat #########################
+[[Fit Statistics]]
+    # fitting method   = ampgo, with L-BFGS-B as local solver
+    # function evals   = 33108
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 2.6106e-04
+    reduced chi-square = 1.0442e-05
+    Akaike info crit   = -339.558492
+    Bayesian info crit = -332.552505
+[[Variables]]
+    a0:  3528.18190 +/- 9.7643e-04 (0.00%) (init = 400)
+    a1:  710.011096 +/- 13.0542518 (1.84%) (init = 100)
+    a2:  0 (fixed)
+    a3:  1110.69852 +/- 97.9662264 (8.82%) (init = 0)
+    a4: -4.73568291 +/- 0.14125580 (2.98%) (init = 0)
+    a5:  0.04602562 +/- 8.5543e-04 (1.86%) (init = 0.001)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a1, a3) =  0.964
+    C(a1, a5) =  0.898
+    C(a3, a5) =  0.871
+    C(a0, a5) =  0.411
+    C(a0, a1) =  0.348
+    C(a4, a5) = -0.315
+    C(a0, a3) =  0.216
+    C(a3, a4) = -0.159
+Cost: 0.09504227696925227
+---------- DE bounds ----------
+a0 :         0	     3528.18	    8000
+a1 :         0	     710.011	    2000
+a2 :   -150000	           0	  150000
+a3 :     -3000	      1110.7	    3000
+a4 :        -5	    -4.73568	       5
+a5 :     1e-05	   0.0460256	    0.15
+a6 :        -5	           0	     0.0
+a7 :     1e-05	       0.001	   0.001
+a8 :         0	       0.001	     300
+       99.73%    95.45%    68.27%    _BEST_    68.27%    95.45%    99.73%
+ a0:      -inf      -inf      -inf3528.17931  +0.00022  +0.00022  +0.00022
+ a1:  -9.13783  -5.30064  -2.75437 689.19568  +2.96272  +4.75921  +7.00148
+ a3: -79.89812 -44.12118 -19.530451075.70569 +24.05621 +37.02512 +53.24559
+ a4:      -inf      -inf      -inf  -4.97611  +0.02730  +0.09386  +0.18946
+ a5:  -0.00041  -0.00004      +nan   0.04337      +inf      +inf      +inf
+[[Fit Statistics]]
+    # fitting method   = Nelder-Mead
+    # function evals   = 729
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 6.1189e-07
+    reduced chi-square = 2.4475e-08
+    Akaike info crit   = -521.237476
+    Bayesian info crit = -514.231489
+[[Variables]]
+    a0:  3528.17931 +/- 5.5074e-05 (0.00%) (init = 3528.182)
+    a1:  689.195678 +/- 2.50555186 (0.36%) (init = 710.0111)
+    a2:  0 (fixed)
+    a3:  1075.70569 +/- 21.8395444 (2.03%) (init = 1110.699)
+    a4: -4.97611445 +/- 0.04980329 (1.00%) (init = -4.735683)
+    a5:  0.04337396 +/- 2.0516e-04 (0.47%) (init = 0.04602562)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a3, a5) =  0.979
+    C(a1, a3) =  0.974
+    C(a1, a5) =  0.917
+    C(a4, a5) = -0.863
+    C(a3, a4) = -0.759
+    C(a1, a4) = -0.594
+    C(a0, a1) =  0.509
+    C(a0, a3) =  0.412
+    C(a0, a5) =  0.371
+######################### ./volume_vs_temperature8.dat #########################
+[[Fit Statistics]]
+    # fitting method   = ampgo, with L-BFGS-B as local solver
+    # function evals   = 35364
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 1.6593e-04
+    reduced chi-square = 6.6373e-06
+    Akaike info crit   = -353.153657
+    Bayesian info crit = -346.147670
+##  Warning: uncertainties could not be estimated:
+    a2:  at initial value
+    a6:  at initial value
+    a7:  at initial value
+    a8:  at initial value
+[[Variables]]
+    a0:  3528.18162 +/-        nan (nan%) (init = 400)
+    a1:  807.520050 +/-        nan (nan%) (init = 100)
+    a2:  0 (fixed)
+    a3:  2341.48030 +/-        nan (nan%) (init = 0)
+    a4: -4.89202325 +/- 0.22293006 (4.56%) (init = 0)
+    a5:  0.04701101 +/-        nan (nan%) (init = 0.001)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+Cost: -0.12864522327708983
+---------- DE bounds ----------
+a0 :         0	     3528.18	    8000
+a1 :         0	      807.52	    2000
+a2 :   -150000	           0	  150000
+a3 :     -3000	     2341.48	    3000
+a4 :        -5	    -4.89202	       5
+a5 :     1e-05	    0.047011	    0.15
+a6 :        -5	           0	     0.0
+a7 :     1e-05	       0.001	   0.001
+a8 :         0	       0.001	     300
+       99.73%    95.45%    68.27%    _BEST_    68.27%    95.45%    99.73%
+ a0:  -0.00022  -0.00022  -0.000223528.17930  +0.00022  +0.00022  +0.00022
+ a1:      +nan      +nan      +nan 689.48895      +nan      +nan      +nan
+ a3:      +nan      +nan      +nan1080.56367      +nan      +nan      +nan
+ a4:      -inf      -inf      -inf  -5.00000      +inf      +inf      +inf
+ a5:      +nan      +nan      +nan   0.04344      +nan      +nan      +nan
+[[Fit Statistics]]
+    # fitting method   = Nelder-Mead
+    # function evals   = 2379
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 6.0078e-07
+    reduced chi-square = 2.4031e-08
+    Akaike info crit   = -521.786900
+    Bayesian info crit = -514.780913
+[[Variables]]
+    a0:  3528.17930 +/- 5.4524e-05 (0.00%) (init = 3528.182)
+    a1:  689.488947 +/- 1.99662441 (0.29%) (init = 807.52)
+    a2:  0 (fixed)
+    a3:  1080.56367 +/- 14.1242566 (1.31%) (init = 2341.48)
+    a4: -4.99999996 +/- 6.9110e-05 (0.00%) (init = -4.892023)
+    a5:  0.04343794 +/- 1.0254e-04 (0.24%) (init = 0.04701101)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a1, a3) =  0.998
+    C(a1, a5) =  0.994
+    C(a3, a5) =  0.987
+    C(a0, a5) =  0.618
+    C(a0, a1) =  0.584
+    C(a0, a3) =  0.554
+######################## ./volume_vs_temperature10.dat #########################
+[[Fit Statistics]]
+    # fitting method   = ampgo, with L-BFGS-B as local solver
+    # function evals   = 33498
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 2.9844e-04
+    reduced chi-square = 1.1937e-05
+    Akaike info crit   = -335.544510
+    Bayesian info crit = -328.538523
+[[Variables]]
+    a0:  3528.18188 +/- 0.00173817 (0.00%) (init = 400)
+    a1:  716.308963 +/- 50.5399491 (7.06%) (init = 100)
+    a2:  0 (fixed)
+    a3:  520.924827 +/- 223.543772 (42.91%) (init = 0)
+    a4:  1.26391994 +/- 3.56532790 (282.08%) (init = 0)
+    a5:  0.03214139 +/- 0.00520542 (16.20%) (init = 0.001)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a4, a5) = -0.970
+    C(a1, a4) =  0.866
+    C(a0, a4) =  0.824
+    C(a0, a5) = -0.768
+    C(a0, a1) =  0.752
+    C(a1, a5) = -0.722
+    C(a3, a5) =  0.528
+    C(a3, a4) = -0.318
+    C(a0, a3) = -0.221
+    C(a1, a3) =  0.195
+Cost: -0.061696569783634914
+---------- DE bounds ----------
+a0 :         0	     3528.18	    8000
+a1 :         0	     716.309	    2000
+a2 :   -150000	           0	  150000
+a3 :     -3000	     520.925	    3000
+a4 :        -5	     1.26392	       5
+a5 :     1e-05	   0.0321414	    0.15
+a6 :        -5	           0	     0.0
+a7 :     1e-05	       0.001	   0.001
+a8 :         0	       0.001	     300
+       99.73%    95.45%    68.27%    _BEST_    68.27%    95.45%    99.73%
+ a0:      -inf      -inf      -inf3528.17917      +inf      +inf      +inf
+ a1: -13.27861  -7.50759  -4.28608 658.86086      +inf      +inf      +inf
+ a3: -71.92091 -34.91684 -13.17455 804.61568      +inf      +inf      +inf
+ a4:      -inf      -inf      -inf  -4.32889  +0.06844  +0.12240  +0.21451
+ a5:  -0.00042      +nan      +nan   0.04046      +inf      +inf      +inf
+[[Fit Statistics]]
+    # fitting method   = Nelder-Mead
+    # function evals   = 532
+    # data points      = 30
+    # variables        = 5
+    chi-square         = 3.0099e-06
+    reduced chi-square = 1.2040e-07
+    Akaike info crit   = -473.443561
+    Bayesian info crit = -466.437575
+[[Variables]]
+    a0:  3528.17917 +/- 1.2523e-04 (0.00%) (init = 3528.182)
+    a1:  658.860858 +/- 8.00685485 (1.22%) (init = 716.309)
+    a2:  0 (fixed)
+    a3:  804.615681 +/- 53.7877471 (6.68%) (init = 520.9248)
+    a4: -4.32888679 +/- 0.10974998 (2.54%) (init = 1.26392)
+    a5:  0.04046098 +/- 5.9112e-04 (1.46%) (init = 0.03214139)
+    a6:  0 (fixed)
+    a7:  0.001 (fixed)
+    a8:  0.001 (fixed)
+[[Correlations]] (unreported correlations are < 0.100)
+    C(a3, a5) =  0.991
+    C(a1, a3) =  0.978
+    C(a1, a5) =  0.948
+    C(a4, a5) = -0.786
+    C(a3, a4) = -0.711
+    C(a1, a4) = -0.551
+    C(a0, a1) =  0.486
+    C(a0, a3) =  0.388
+    C(a0, a5) =  0.362

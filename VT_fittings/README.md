@@ -25,4 +25,4 @@ After each fit a *.fit file is created with columns containing the data and fitt
 
 A summary file containing two columns of alpha at 100 K and 300K for each CRN is also generated. This file is used for the generation of the box plots presented in the main paper.
 
-Note: The AMPGO solver is a stochastic algorithm, so one might get slightly different results for an individual fitting. This does not changes the collective behaviour.
+Note: The AMPGO solver is a stochastic algorithm, so one might get slightly different results for an individual fitting. This does not change the collective behaviour.

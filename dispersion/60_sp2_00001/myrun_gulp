@@ -1,0 +1,13 @@
+#!/bin/sh
+#PBS -l nodes=p1:ppn=12
+#PBS -N gulp_disp_60sp2
+#PBS -j oe
+#PBS -V 
+
+# change directory
+cd ${PBS_O_WORKDIR}
+
+
+/usr/bin/mpirun /opt/gulp-5.1-parallel/Src/gulp < input.gin > output.got
+
+

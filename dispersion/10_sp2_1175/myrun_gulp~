@@ -1,6 +1,6 @@
 #!/bin/sh
-#PBS -l nodes=p1:ppn=12
-#PBS -N gulp_disp_20sp2
+#PBS -l nodes=p2:ppn=12
+#PBS -N gulp_disp_10sp2
 #PBS -j oe
 #PBS -V 
 
